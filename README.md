@@ -6,11 +6,14 @@ quantum programming in Cubical Agda.
 ## Overview
 
 This repository is a long-term mathematical software research programme. Its
-central question is whether topological quantum transformations can be
-realized computationally as transport in dependent types within Cubical Agda.
-The programme brings together Homotopy Type Theory and Cubical Type Theory
-with braid groups and monodromy, classifying spaces, dependent type families,
-and the computational behaviour of transport along loops.
+central question is whether dependent-type transport in Cubical Type Theory
+can provide an executable realization of topological quantum transformations.
+The programme relates Homotopy Type Theory and Cubical Type Theory to braid
+groups and monodromy, classifying spaces, dependent type families, and
+transport along loops. Its central challenge is not only to formalize the
+existence and mathematical properties of the relevant transformations, but
+also to determine whether the corresponding transport operations have
+nontrivial computational behaviour.
 
 The principal mathematical motivation is Myers--Sati--Schreiber,
 [*Topological Quantum Gates in Homotopy Type Theory*](https://arxiv.org/abs/2303.02382),
@@ -34,10 +37,25 @@ directions, not completed implementation stages.
    computational investigation of the dependent-type construction associated
    with Definition 6.7.
 
+## Computational objective
+
+The ultimate objective is to construct a dependent type family representing
+topological quantum states and to investigate whether transport along suitable
+braid-group loops can compute the corresponding state transformations.
+
+A computational realization requires more than a type-correct formalization
+of the underlying mathematics. It requires explicit transport operations with
+nontrivial computational behaviour, together with a formally justified
+correspondence between those operations and the intended mathematical
+quantum-gate semantics. Whether this can be achieved within the current
+computational capabilities of Cubical Agda remains an open research question.
+
 ## Research architecture
 
-The following diagram is a conceptual research architecture. It is not a
-claimed dependency theorem or a fully established construction.
+The diagram summarizes the intended progression from foundational
+formalization to computational interpretation. Individual constructions may
+be developed independently or in parallel, and their precise dependencies
+remain subject to mathematical investigation.
 
 ```text
 Group presentations and classifying spaces
@@ -53,30 +71,25 @@ Computational topological quantum transformations
 
 ## Formalized developments
 
-| Component | Language | Status | Verified boundary | Open boundary |
+| Component | Language | Status | Verified results | Outstanding results |
 |---|---|---|---|---|
 | [Group presentations as homotopy pushouts](docs/FORMALIZATIONS.md#group-presentations-as-homotopy-pushouts) | Cubical Agda | Type-checked foundational construction | Surjectivity of the canonical presentation homomorphism | Injectivity, the resulting group isomorphism, and the classifying-space equivalence |
 
-The corresponding [Agda source guide](src/GroupPresentation/README.md) and
-[Shadow Paper](papers/GroupPresentations/README.md) give the mathematical
-derivation order and a source-traceable exposition. The complete formalized
-boundary is maintained in [docs/FORMALIZATIONS.md](docs/FORMALIZATIONS.md)
-and [docs/FORMALIZATION_STATUS.md](docs/FORMALIZATION_STATUS.md).
+Detailed source modules, precise theorem statements, and the verified boundary
+are maintained in [docs/FORMALIZATIONS.md](docs/FORMALIZATIONS.md) and
+[docs/FORMALIZATION_STATUS.md](docs/FORMALIZATION_STATUS.md).
 
 ## Navigation
 
 - [Formalized developments](docs/FORMALIZATIONS.md) -- verified constructions,
   precise theorem statements, and source modules.
-- [Agda sources](src/GroupPresentation/README.md) -- mathematical reading
-  order for the current development.
-- [Shadow Papers](papers/GroupPresentations/README.md) -- mathematical
-  exposition and the compiled PDF.
+- [Agda source code](src/) -- current Cubical Agda developments.
+- [Shadow Papers](papers/) -- mathematical exposition and compiled papers.
 - [Reproducibility](docs/REPRODUCIBILITY.md) -- pinned environment and exact
   checking commands.
 - [Research roadmap](docs/RESEARCH_DIRECTION.md) -- proposed constructions
   and unresolved implementation challenges.
-- [Alignment records](alignment/records.jsonl) -- statement-to-source
-  provenance.
+- [Alignment and provenance](alignment/) -- statement-to-source records.
 
 ## Reproducibility and verification
 
