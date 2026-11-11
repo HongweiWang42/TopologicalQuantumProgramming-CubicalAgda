@@ -1,92 +1,98 @@
-# TopologicalQuantumProgramming-CubicalAgda
+# Topological Quantum Programming in Cubical Agda
 
-This repository develops, in Cubical Agda, the generators-and-relations
-construction that underlies a prospective account of computational type
-transport for topological quantum gates. Its long-term mathematical target is
-the construction used in Definition 6.7 of Myers--Sati--Schreiber,
-*Topological Quantum Gates in Homotopy Type Theory* (arXiv:2303.02382).
+Research on the formalization and computational realization of topological
+quantum programming in Cubical Agda.
 
-The present formalization is deliberately narrower. Given arbitrary types of
-generators and relations, with two finite signed words for each relation, it
-constructs a suspension-based generator type, a relation-circle pushout, its
-1-truncation, the algebraic presented group, and the canonical homomorphism
-from that group to the fundamental group of the truncated pushout.
+## Overview
 
-## Verified boundary
+This repository is a long-term mathematical software research programme. Its
+central question is whether topological quantum transformations can be
+realized computationally as transport in dependent types within Cubical Agda.
+The programme brings together Homotopy Type Theory and Cubical Type Theory
+with braid groups and monodromy, classifying spaces, dependent type families,
+and the computational behaviour of transport along loops.
 
-The following theorem is typechecked in
-`src/GroupPresentation/CanonicalSurjectivity.agda`:
+The principal mathematical motivation is Myers--Sati--Schreiber,
+[*Topological Quantum Gates in Homotopy Type Theory*](https://arxiv.org/abs/2303.02382),
+especially Definition 6.7. This reference motivates the research direction;
+it does not mean that Definition 6.7, braid-group actions, or executable
+topological quantum gates have already been formalized here.
 
-```agda
-canonicalPresentationHom-surjective :
-  (P : Presentation Gen Rel) →
-  isSurjective (canonicalPresentationHom P)
+## Research objectives
+
+The programme investigates four related directions. They are research
+directions, not completed implementation stages.
+
+1. **Homotopy-theoretic foundations.** Group presentations, classifying
+   spaces, higher inductive types, braid groups, homotopy pushouts, and
+   truncations.
+2. **Geometric and dependent-type structures.** The complex multiplicative
+   group, torsors, classifying types, mapping types, and dependent families.
+3. **Computational transport and monodromy.** Transport along loops, induced
+   transformations, and the computational behaviour of dependent types.
+4. **Topological quantum programming.** Formal implementation and
+   computational investigation of the dependent-type construction associated
+   with Definition 6.7.
+
+## Research architecture
+
+The following diagram is a conceptual research architecture. It is not a
+claimed dependency theorem or a fully established construction.
+
+```text
+Group presentations and classifying spaces
+                 ↓
+Braid-group and geometric structures
+                 ↓
+Dependent type families
+                 ↓
+Transport and monodromy
+                 ↓
+Computational topological quantum transformations
 ```
 
-Thus the canonical homomorphism from the algebraically presented group to the
-fundamental group of the presentation type is verified to be surjective. No
-claim of injectivity is made. Consequently, neither the group isomorphism nor
-the identification of `BG_pres P` with a classifying space of the presented
-group is formalized yet. In particular, Definition 6.7 and its computational
-transport have not been formalized.
+## Formalized developments
 
-## Layout
+| Component | Language | Status | Verified boundary | Open boundary |
+|---|---|---|---|---|
+| [Group presentations as homotopy pushouts](docs/FORMALIZATIONS.md#group-presentations-as-homotopy-pushouts) | Cubical Agda | Type-checked foundational construction | Surjectivity of the canonical presentation homomorphism | Injectivity, the resulting group isomorphism, and the classifying-space equivalence |
 
-- `src/` -- Cubical Agda sources. The mathematical reading order is recorded
-  in [`src/GroupPresentation/README.md`](src/GroupPresentation/README.md).
-- `papers/GroupPresentations/` -- the preliminary Shadow Paper, its compiled
-  PDF, section sources, and an archived earlier draft.
-- `alignment/` -- machine-readable statement-to-source traceability records.
-- `docs/` -- formalization status, reproducibility notes, and the next
-  research direction.
-- `cubical/` -- the project-local pinned Cubical Agda checkout, retained as
-  the repository's dependency; it is not locally maintained formalization
-  source.
+The corresponding [Agda source guide](src/GroupPresentation/README.md) and
+[Shadow Paper](papers/GroupPresentations/README.md) give the mathematical
+derivation order and a source-traceable exposition. The complete formalized
+boundary is maintained in [docs/FORMALIZATIONS.md](docs/FORMALIZATIONS.md)
+and [docs/FORMALIZATION_STATUS.md](docs/FORMALIZATION_STATUS.md).
 
-## Reproducibility
+## Navigation
 
-The checked environment is:
+- [Formalized developments](docs/FORMALIZATIONS.md) -- verified constructions,
+  precise theorem statements, and source modules.
+- [Agda sources](src/GroupPresentation/README.md) -- mathematical reading
+  order for the current development.
+- [Shadow Papers](papers/GroupPresentations/README.md) -- mathematical
+  exposition and the compiled PDF.
+- [Reproducibility](docs/REPRODUCIBILITY.md) -- pinned environment and exact
+  checking commands.
+- [Research roadmap](docs/RESEARCH_DIRECTION.md) -- proposed constructions
+  and unresolved implementation challenges.
+- [Alignment records](alignment/records.jsonl) -- statement-to-source
+  provenance.
 
-- Agda `2.8.0-3d04bac`;
-- Cubical Agda commit `87af036ebd1c87956cf08fea44e62c7cf76392ca`
-  (the v0.9-compatible line);
-- XeLaTeX/`latexmk` for the Shadow Paper.
+## Reproducibility and verification
 
-From the repository root, check every local module with:
+The checked development uses Agda `2.8.0-3d04bac` and the project-local
+Cubical Agda dependency pinned at commit
+`87af036ebd1c87956cf08fea44e62c7cf76392ca` (v0.9-compatible line). The
+current local source modules typecheck in that environment. Detailed setup,
+commands, and source-audit procedures are in
+[docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md).
 
-```sh
-for file in src/GroupPresentation.agda src/GroupPresentation/*.agda; do
-  agda -i src -i cubical "$file" || exit $?
-done
-```
+## Research references
 
-Compile the Shadow Paper with:
-
-```sh
-cd papers/GroupPresentations
-latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex
-```
-
-The commands, expected results, and scope of the source audit are documented
-in [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md). The source-level
-provenance of the paper is recorded in
-[`alignment/records.jsonl`](alignment/records.jsonl).
-
-On a future clone, initialize the pinned dependency before checking:
-
-```sh
-git submodule update --init --recursive
-git -C cubical checkout 87af036ebd1c87956cf08fea44e62c7cf76392ca
-```
-
-## Next research direction
-
-The next programme, discussed with Urs, is mathematical rather than an
-implemented extension of this repository: braid-group classifying spaces,
-`C×`-torsors and `B(C×)`, mapping types `BG → B(C×)`, and finally the
-computational transport required by Definition 6.7. See
-[`docs/RESEARCH_DIRECTION.md`](docs/RESEARCH_DIRECTION.md). These are
-research directions, not verified results.
+- Myers, Sati, and Schreiber, [*Topological Quantum Gates in Homotopy Type
+  Theory*](https://arxiv.org/abs/2303.02382).
+- [Cubical Agda](https://github.com/agda/cubical), used here at the pinned
+  revision recorded above.
 
 ## License
 
