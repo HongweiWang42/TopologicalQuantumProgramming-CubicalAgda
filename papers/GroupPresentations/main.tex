@@ -1,0 +1,89 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{amsthm}
+\usepackage{booktabs,array,longtable}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+\usepackage{xcolor}
+\usepackage{fontspec}
+\usepackage{microtype}
+
+% XeLaTeX preserves the UTF-8 spelling of Cubical Agda identifiers.
+% In particular, \Agda keeps π₁, ≃∙, ≡, ↑, and → as literal code characters.
+\setmonofont{Menlo}
+% Arial Unicode MS supplies the mathematical and subscript glyphs absent from
+% Menlo while retaining the source's literal UTF-8 identifiers.
+\newfontfamily\AgdaFont{Arial Unicode MS}[Scale=MatchLowercase]
+\renewcommand\UrlFont{\AgdaFont\upshape}
+\newcommand{\Agda}[1]{{\normalfont\nolinkurl{#1}}}
+\newcommand{\AgdaOptions}{{\AgdaFont\char123\#- OPTIONS --cubical --guardedness \#-\char125}}
+\newcommand{\BG}{\mathsf{BG}_{\mathrm{pres}}}
+\newcommand{\FP}{F_P}
+\newcommand{\GP}{G_P}
+\newcommand{\piOne}{\pi_1}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{0.35em}
+\setlength{\parindent}{1.5em}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{remark}[definition]{Remark}
+\newcommand{\formal}[1]{\par\noindent\footnotesize\normalfont\textit{Formal source.} \Agda{#1}.\par\normalsize\smallskip}
+\title{Group Presentations as Homotopy Pushouts\\
+\large A Cubical Agda Formalization}
+\author{
+Hongwei (Alex) Wang\\[3pt]
+\small New York University Abu Dhabi\\
+\small \texttt{hw4375@nyu.edu}
+}
+\date{11 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+For a presentation by a type of generators and a type of relations, we form a
+1-truncated homotopy pushout obtained by attaching one circle for each
+relation.  We construct the usual algebraic quotient of the free group by the
+normal closure of the relation differences and a canonical homomorphism from
+this group to the fundamental group of the resulting type.  The principal
+formal result is that this homomorphism is surjective.  The article gives a
+mathematical account of the checked Cubical Agda proofs; it does not assert
+injectivity, a presentation theorem for the fundamental group, or a
+classifying-space equivalence.
+\end{abstract}
+
+
+\input{sections/introduction}
+\input{sections/presentations}
+\input{sections/generator-space}
+\input{sections/pushout-relations}
+\input{sections/presented-group}
+\input{sections/canonical-hom}
+\input{sections/surjectivity}
+\input{sections/limitations}
+\input{sections/traceability}
+
+\begin{thebibliography}{9}
+\bibitem{hottbook}
+The Univalent Foundations Program.
+\newblock \emph{Homotopy Type Theory: Univalent Foundations of Mathematics}.
+\newblock Institute for Advanced Study, 2013.
+\newblock \url{https://homotopytypetheory.org/book/}.
+
+\bibitem{cubical}
+Cubical Agda contributors.
+\newblock \emph{Cubical Agda standard library}, pinned checkout
+\Agda{87af036ebd1c87956cf08fea44e62c7cf76392ca}, v0.9-compatible line.
+\newblock \url{https://github.com/agda/cubical}.
+
+\bibitem{agda}
+The Agda Team.
+\newblock \emph{Agda 2.8.0}.
+\newblock \url{https://agda.readthedocs.io/}.
+\end{thebibliography}
+\end{document}

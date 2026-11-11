@@ -1,0 +1,8 @@
+\appendix
+\section{Formal provenance and reproducibility}
+
+The local results used in the article are proved in \Agda{GroupPresentation.Relations}, \Agda{GroupPresentation.TruncatedRelations}, \Agda{GroupPresentation.Connectedness}, \Agda{GroupPresentation.PresentedGroup}, \Agda{GroupPresentation.PresentationHom}, \Agda{GroupPresentation.GeneratorBouquet}, \Agda{GroupPresentation.BouquetFundamentalGroup}, \Agda{GroupPresentation.Surjectivity}, \Agda{GroupPresentation.TruncationNaturality}, and \Agda{GroupPresentation.CanonicalSurjectivity}. The exact statement-to-source map, including upstream declarations, is maintained in \Agda{alignment/records.jsonl}.
+
+The checked environment is Agda \Agda{2.8.0-3d04bac} with the pinned Cubical checkout \Agda{87af036ebd1c87956cf08fea44e62c7cf76392ca}, on its v0.9-compatible line. The relevant upstream ingredients are the suspension, pushout, truncation, free-group, quotient-group, bouquet fundamental-group, and connected-map interfaces of Cubical Agda. The local proofs cited above were checked with \Agda{agda -i src -i cubical <module>}; all source modules use \AgdaOptions.
+
+The proof of the main theorem uses, rather than re-proves, the upstream bouquet computations \Agda{loopingT}, \Agda{windingT}, and \Agda{left-homotopy}, the connected-map consequence \Agda{connectedFun→πSurj}, and the path/truncation equivalence \Agda{PathIdTruncIso}. Their roles are stated in the proof so that the mathematical argument remains readable independently of this implementation note.

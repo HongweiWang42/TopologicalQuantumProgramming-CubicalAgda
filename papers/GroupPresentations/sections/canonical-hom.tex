@@ -1,0 +1,12 @@
+\section{The canonical homomorphism}
+
+\formal{GroupPresentation.FundamentalGroup.BG-π₁; GroupPresentation.FundamentalGroup.relationLoopπ₁-null}
+Let $\pi_1(B_P)$ denote the fundamental group at the designated base point. The relation loop has trivial class in this group, obtained by taking the set-truncation class of its nullhomotopy.
+
+\formal{GroupPresentation.PresentationHom.freeGroupToBG-π₁; GroupPresentation.PresentationHom.wordToFreeGroup-π₁; GroupPresentation.PresentationHom.relationDifferenceToBG-π₁-null; GroupPresentation.PresentationHom.presentationNormalSubgroupInKernel; GroupPresentation.PresentationHom.canonicalPresentationHom}
+\begin{proposition}
+There is a canonical group homomorphism $c_P:G_P\to\pi_1(B_P)$.
+\end{proposition}
+\begin{proof}
+Send $g$ to the class of the loop induced by $\ell_g$. The upstream free-group recursor extends this to $F_P\to\pi_1(B_P)$. Induction on a signed word identifies its image with the corresponding concatenated loop class. Hence $d_r$ maps to the class of $L_0(r)L_1(r)^{-1}$, which is trivial by the relation nullhomotopy. By normal-closure leastness, $N_P$ lies in the kernel. The quotient eliminator therefore defines a map on $F_P/N_P$; quotient induction proves multiplicativity. This is $c_P$.
+\end{proof}

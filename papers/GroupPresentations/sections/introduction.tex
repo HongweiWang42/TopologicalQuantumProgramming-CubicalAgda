@@ -1,0 +1,17 @@
+\section{Introduction}
+
+Let $G$ and $R$ be types.  A presentation with generators $G$ and relations
+$R$ may be realized geometrically by a graph with one loop for each generator,
+followed by the attachment of a circle for each relation.  In the present
+construction the graph is expressed as a suspension, and the attachment is a
+homotopy pushout.  The subsequent 1-truncation retains the range in which a
+fundamental group may be formed.  The construction is carried out in Cubical
+Agda, using its higher inductive types for suspensions, circles, pushouts, and
+truncations~\cite{cubical,hottbook}.
+
+The input is universe-polymorphic: $G:\mathsf{Type}_{\ell}$,
+$R:\mathsf{Type}_{\ell'}$, and a presentation $P$.  No sethood,
+decidability, or discreteness assumption is made on $G$ or $R$.  The source
+annotations below identify the declaration whose type and proof term establish
+the assertion in question.  Environment and API details are deferred to
+Appendix~A.

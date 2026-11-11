@@ -1,0 +1,13 @@
+\section{Surjectivity}
+
+\formal{GroupPresentation.BouquetFundamentalGroup.bouquetLoopHom-surjective; GroupPresentation.Surjectivity.inlPresentation↑-π₁-surjective; GroupPresentation.TruncationNaturality.truncationπ₁-surjective; GroupPresentation.CanonicalSurjectivity.freeGroupToBG-byTruncation≡freeGroupToBG-π₁; GroupPresentation.CanonicalSurjectivity.canonicalPresentationHom-surjective}
+\begin{theorem}
+For every syntactic presentation $P$, the canonical homomorphism $c_P:G_P\to\pi_1(B_P)$ is surjective.
+\end{theorem}
+\begin{proof}
+The cited bouquet theorem constructs, for every loop class in a bouquet, a free-group word whose image is that class. Its proof uses the library maps \Agda{windingT} and \Agda{loopingT}: after passing through the inverse of the free-groupoid truncation equivalence, the local map \Agda{bouquetLoopHom} agrees with \Agda{loopingT}; the library homotopy \Agda{left-homotopy} makes the recovered word a section. The pointed equivalence of the generator-space section transports this surjectivity to the lifted $X_G$.
+
+The left inclusion $X_G\to Y_P$ is surjective on fundamental groups. Indeed, the cited proof identifies every fibre of $R\times S^1\to R$ with a lifted circle, proves that circle connected, and applies the upstream connected-pushout theorem followed by \Agda{connectedFun→πSurj}. The map $Y_P\to B_P$ induced by the truncation constructor is likewise surjective on fundamental groups: the local proof decodes a truncated loop with \Agda{PathIdTruncIso}, and the inverse law of that isomorphism gives a section.
+
+Composing these three surjections gives a surjection from $F_P$ to $\pi_1(B_P)$. On a free generator, its value is computed by path congruence as the class of the image of $\ell_g$. Free-group homomorphism extensionality therefore identifies this composite with the previously defined free-group map underlying $c_P$. Finally a preimage in $F_P$ is sent to its quotient class in $G_P$; propositional-truncation functoriality transports the equality of images. This is exactly the final proof term.
+\end{proof}

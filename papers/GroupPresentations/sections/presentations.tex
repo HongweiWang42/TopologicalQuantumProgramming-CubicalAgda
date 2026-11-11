@@ -1,0 +1,15 @@
+\section{Presentations and loop words}
+
+\formal{GroupPresentation.Presentation; GroupPresentation.Signed; GroupPresentation.Word; GroupPresentation.letterLoop; GroupPresentation.wordLoop; GroupPresentation.relationLoop₀; GroupPresentation.relationLoop₁; GroupPresentation.relationLoop}
+\begin{definition}
+A \emph{syntactic presentation} $P$ on $G$ and $R$ consists of two functions
+$p_0,p_1:R\to\mathsf{Word}(G)$, where a word is a finite list of signed
+generators.  Once a based space carrying loops $\ell_g$ is fixed, a positive
+letter is evaluated by $\ell_g$, a negative letter by $\ell_g^{-1}$, and a
+word by concatenation.  Write $L_i(r)$ for the loop represented by $p_i(r)$
+and $L(r)=L_0(r)\cdot L_1(r)^{-1}$ for its relation-difference loop.
+\end{definition}
+
+The words are evaluated in a raw identity type, before set truncation.  Thus
+the circle attachment uses the actual path $L(r)$ and requires no normal-form
+theorem for an untruncated loop space.

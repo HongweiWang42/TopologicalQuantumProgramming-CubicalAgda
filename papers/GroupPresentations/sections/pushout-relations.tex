@@ -1,0 +1,53 @@
+\section{Relation circles and the presentation type}
+
+\formal{GroupPresentation.attachingMap; GroupPresentation.relationProjection; GroupPresentation.PresentationPushout; GroupPresentation.BG_pres; GroupPresentation.BG-basepoint}
+\begin{definition}
+For $r:R$, circle recursion sends the circle base point to north and its
+generating loop to $L(r)$.  Let $a:R\times S^1\to X_G$ be the resulting map
+and let $q:R\times S^1\to R$ be projection.  Define
+\[
+Y_P=\operatorname{Pushout}(a,q), \qquad B_P=\lVert Y_P\rVert_1.
+\]
+The formal notation is \Agda{PresentationPushout P} and \Agda{BG_pres P};
+the latter is implemented as h-level truncation $3$, the library's index for
+a 1-type.
+\end{definition}
+
+\formal{GroupPresentation.Relations.relationCircleNaturality; GroupPresentation.Relations.conjugacyToRefl; GroupPresentation.Relations.inlRelationLoop-null; GroupPresentation.Relations.inlRelationSidesAgree}
+\begin{proposition}
+For every $r:R$, the image of $L(r)$ in $Y_P$ is null.  Consequently the
+images of $L_0(r)$ and $L_1(r)$ in $Y_P$ are equal.
+\end{proposition}
+\begin{proof}
+Write $u$ for the pushout glue path at $(r,\mathsf{base})$.  Naturality of
+the family of glue paths around the circle gives $u=\mathsf{inl}(L(r))\cdot
+u$.  Cancelling $u$ on the right proves $\mathsf{inl}(L(r))=\mathsf{refl}$;
+the cited term performs this cancellation explicitly by the right unit,
+associativity, and inverse-cancellation laws.  Since $L(r)=L_0(r)\cdot
+L_1(r)^{-1}$, a second cancellation calculation gives
+$\mathsf{inl}(L_0(r))=\mathsf{inl}(L_1(r))$.
+\end{proof}
+
+\formal{GroupPresentation.TruncatedRelations.generatorSpaceToBG; GroupPresentation.TruncatedRelations.BG-relationLoop-null; GroupPresentation.TruncatedRelations.BG-relationSidesAgree}
+\begin{corollary}
+The canonical map $X_G\to B_P$ sends every relation loop to reflexivity and
+sends the two sides of each relation to equal loops.
+\end{corollary}
+\begin{proof}
+The map is the composite of the left pushout inclusion with the truncation
+constructor.  Applying that constructor to the two preceding path equalities
+gives the asserted equalities in $B_P$.
+\end{proof}
+
+\formal{GroupPresentation.Connectedness.presentationPushoutMerePathToBase; GroupPresentation.Connectedness.BG-pres-isConnected}
+\begin{proposition}
+$B_P$ is connected.
+\end{proposition}
+\begin{proof}
+Pushout induction reduces a point of $Y_P$ either to a point of $X_G$, which
+is merely joined to north by the preceding lemma, or to a relation point,
+which is joined to the base point by the glue path at the circle base point.
+Truncation induction transports these merely inhabited path spaces to $B_P$.
+The final term contracts the set truncation at the selected base point, which
+is the library definition of \Agda{isConnected 2}.
+\end{proof}

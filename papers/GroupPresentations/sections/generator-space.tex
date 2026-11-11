@@ -1,0 +1,36 @@
+\section{The generator space}
+
+\formal{GroupPresentation.GeneratorInput; GroupPresentation.GeneratorSpace; GroupPresentation.generatorLoop}
+\begin{definition}
+Let $e$ denote the point of the auxiliary summand $\mathbf{1}$.  The
+\emph{generator space} is $X_G=\mathrm{Susp}(\mathbf{1}\sqcup G)$, based at
+its north pole.  For $g:G$, put $\ell_g=\mathrm{merid}(g)\cdot
+\mathrm{merid}(e)^{-1}$.  Thus each generator determines a north-based loop.
+\end{definition}
+
+\formal{GroupPresentation.Connectedness.generatorSpaceMerePathToNorth}
+\begin{lemma}
+Every point of $X_G$ is merely equal to its north pole.
+\end{lemma}
+\begin{proof}
+The proof is suspension induction.  At north it is represented by reflexivity,
+and at south by the reference meridian.  Along a meridian the target is a
+proposition, namely a propositional truncation of an identity type; the two
+endpoint representatives therefore extend uniquely.
+\end{proof}
+
+\formal{GroupPresentation.GeneratorBouquet.generatorSpace≃∙Bouquet; GroupPresentation.GeneratorBouquet.generatorLoop-toBouquet; GroupPresentation.GeneratorBouquet.liftedGeneratorSpace≃∙Bouquet}
+\begin{proposition}
+There is a pointed equivalence $X_G\simeq_*\mathrm{Bouquet}(G)$ sending
+$\ell_g$ to the $g$-th bouquet loop; the same assertion holds after the
+universe lift used below.
+\end{proposition}
+\begin{proof}
+The forward suspension eliminator sends both poles to the bouquet base point,
+the $e$-meridian to reflexivity, and the $g$-meridian to the $g$-loop.  The
+inverse sends the bouquet base point to north and its $g$-loop to $\ell_g$.
+Their homotopies are respectively suspension and bouquet induction.  The
+loop calculation follows by functoriality of concatenation and the unit law
+for the image of the reference meridian.  The lifted proof is the same
+construction with $G$ replaced by its lift.
+\end{proof}

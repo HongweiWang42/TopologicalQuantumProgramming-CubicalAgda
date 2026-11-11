@@ -1,0 +1,4 @@
+name: urs-group-presentation
+include: src
+  cubical
+flags: --cubical --guardedness

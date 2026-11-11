@@ -1,0 +1,17 @@
+# Agda build products
+*.agdai
+_build/
+
+# TeX build products (the checked PDF is retained)
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.xdv
+
+# Local historical paper copy; the current paper is papers/GroupPresentations/main.tex.
+papers/GroupPresentations/earlier-draft/
+
+# Finder metadata
+.DS_Store
