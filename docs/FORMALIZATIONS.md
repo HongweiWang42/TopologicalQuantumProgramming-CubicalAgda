@@ -6,7 +6,9 @@ research directions in [RESEARCH_DIRECTION.md](RESEARCH_DIRECTION.md).
 
 ## Group presentations as homotopy pushouts
 
-**Language:** Cubical Agda. **Status:** type-checked foundational construction.
+**Milestone:** **Group Presentations as Homotopy Pushouts — Foundational
+Construction v0.1**. **Language:** Cubical Agda. **Status:** type-checked
+foundational construction.
 
 For a local syntactic presentation `P : Presentation Gen Rel`, the
 development constructs a suspension-based generator space, interprets signed
@@ -60,6 +62,16 @@ itself a formal proof of the final classifying-space interpretation.
   canonical homomorphism.
 - [CanonicalSurjectivity.agda](../src/GroupPresentation/CanonicalSurjectivity.agda)
   -- the verified surjectivity theorem.
+- [PublicAPI.agda](../src/GroupPresentation/PublicAPI.agda) -- client-facing
+  aliases for the verified construction.
+- [Examples.agda](../src/GroupPresentation/Examples.agda) -- minimal checked
+  examples.
+- [KernelReduction.agda](../src/GroupPresentation/KernelReduction.agda) -- a
+  conditional injectivity reduction, without the required reverse containment.
+- [Br3.agda](../src/GroupPresentation/Br3.agda) -- the checked concrete
+  two-generator, one-relation Br(3) presentation instance.  It instantiates
+  the existing construction and does not identify the output with an
+  independently defined classical braid group or its classifying space.
 
 The full mathematical reading order is in
 [src/GroupPresentation/README.md](../src/GroupPresentation/README.md). The

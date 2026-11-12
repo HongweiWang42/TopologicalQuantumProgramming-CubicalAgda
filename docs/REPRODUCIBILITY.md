@@ -34,9 +34,12 @@ for file in src/GroupPresentation.agda src/GroupPresentation/*.agda; do
 done
 ```
 
-Expected result: one printed pathname for each of the twelve local source
-modules and exit status zero, with no diagnostics. The source dependency
-order is in [`src/GroupPresentation/README.md`](../src/GroupPresentation/README.md).
+The command discovers every local source module.  At the Foundational
+Construction v0.1 milestone it ranges over sixteen modules: the root module
+and fifteen modules in `src/GroupPresentation/`.  Its required result is exit
+status zero with no diagnostics; Agda may suppress repeated per-file checking
+messages when cached interfaces are current. The source dependency order is
+in [`src/GroupPresentation/README.md`](../src/GroupPresentation/README.md).
 
 ## Shadow Paper
 
@@ -61,3 +64,9 @@ Injectivity, the group isomorphism, and the classifying-space equivalence are
 not formalized. The paper describes this boundary explicitly and should not
 be read as asserting a formalized Seifert--van Kampen theorem or Definition
 6.7 of Myers--Sati--Schreiber.
+
+The checked `GroupPresentation.Br3` module is an instance of the generic
+construction for the standard two-generator, one-relation braid presentation.
+It proves the corresponding relation coherence and specializes the existing
+surjectivity theorem; it does not identify its output with an independently
+defined classical braid group or classifying space.

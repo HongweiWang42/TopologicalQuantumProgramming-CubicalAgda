@@ -69,11 +69,22 @@ Transport and monodromy
 Computational topological quantum transformations
 ```
 
+## Current foundational milestone
+
+**Group Presentations as Homotopy Pushouts — Foundational Construction v0.1**
+is the current stable-foundation milestone.  It provides the parameterized
+presentation-pushout construction, its 1-truncation, the canonical
+fundamental-group homomorphism, and its surjectivity, together with a checked
+three-strand braid-presentation instance.  It does not establish injectivity,
+a group isomorphism, a classifying-space equivalence, or computational
+transport.  Subsequent work may build on this boundary while investigating
+the complex multiplicative group, torsors, and computational delooping.
+
 ## Formalized developments
 
 | Component | Language | Status | Verified results | Outstanding results |
 |---|---|---|---|---|
-| [Group presentations as homotopy pushouts](docs/FORMALIZATIONS.md#group-presentations-as-homotopy-pushouts) | Cubical Agda | Type-checked foundational construction | Surjectivity of the canonical presentation homomorphism | Injectivity, the resulting group isomorphism, and the classifying-space equivalence |
+| [Group presentations as homotopy pushouts](docs/FORMALIZATIONS.md#group-presentations-as-homotopy-pushouts) | Cubical Agda | Foundational Construction v0.1 | Surjectivity of the canonical presentation homomorphism; checked Br(3) presentation instance | Injectivity, the resulting group isomorphism, the classifying-space equivalence, and computational transport |
 
 Detailed source modules, precise theorem statements, and the verified boundary
 are maintained in [docs/FORMALIZATIONS.md](docs/FORMALIZATIONS.md) and

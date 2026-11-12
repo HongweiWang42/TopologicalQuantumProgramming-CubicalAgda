@@ -29,9 +29,20 @@ unless explicitly marked **planned**.
     the fundamental-group map induced by the truncation constructor.
 12. [CanonicalSurjectivity.agda](CanonicalSurjectivity.agda) --
     `canonicalPresentationHom-surjective`.
+13. [PublicAPI.agda](PublicAPI.agda) -- compact public re-export surface for
+    client modules.
+14. [Examples.agda](Examples.agda) -- minimal one-generator examples of the
+    public interface.
+15. [KernelReduction.agda](KernelReduction.agda) -- a conditional reduction
+    of injectivity to the unproved reverse free-kernel containment.
+16. [Br3.agda](Br3.agda) -- the concrete presentation
+    `⟨ σ₁, σ₂ | σ₁σ₂σ₁ = σ₂σ₁σ₂ ⟩`, its presentation pushout and
+    1-truncation, relation coherence, and specialized canonical surjectivity.
 
-**Planned, with no source modules:** injectivity of the canonical homomorphism,
-the resulting group isomorphism, and the classifying-space equivalence.
+**Planned, with no proof of the following statements:** injectivity of the
+canonical homomorphism, the resulting group isomorphism, and the
+classifying-space equivalence.  `KernelReduction.agda` records only a
+conditional route to injectivity; it does not prove the missing hypothesis.
 
 ## Current mathematical boundary
 
