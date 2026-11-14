@@ -1,0 +1,70 @@
+\section{Comparison with \texorpdfstring{$\mathsf{EM}_1$}{EM1}}
+\label{ch:em1}
+
+\subsection{The Eilenberg--Mac Lane delooping}
+For a set-level group $G$, Cubical Agda supplies a higher inductive type $\mathsf{EM}_1(G)$. It has a basepoint and one generating loop for every $g:G$, together with constructors imposing the group multiplication law and a truncation constructor making the result a $1$-type. This is a synthetic model of the usual classifying space of a discrete group.
+
+The relevant recursor has a particularly transparent form. To define a map from $\mathsf{EM}_1(G)$ into a $1$-type $B$, it suffices to give:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a point $b:B$;
+\item a loop $\lambda_g:b=b$ for each $g:G$; and
+\item paths $\lambda_{gh}=\lambda_g\mathbin{\cdot}\lambda_h$.
+\end{enumerate}
+The target's $1$-truncation condition is what makes this data sufficient.
+
+\upstream{\texttt{Properties.agda}}{rec'}
+
+\subsection{The comparison map}
+Set $B=\GTorsLevel$ and take $b=b_G$. For the loop indexed by $g$, use the regular-torsor loop $p(g)$. The coherence required by the recursor is exactly Proposition 4.5. Thus one obtains
+\begin{equation}
+f:\mathsf{EM}_1(G)\longrightarrow \GTorsLevel.
+\label{eq:em-map}
+\end{equation}
+By construction $f$ sends the Eilenberg--Mac Lane basepoint to the regular torsor and sends the generator loop for $g$ to $p(g)$.
+
+\formal{\texttt{EM1Comparison.agda}}{TorsorDelooping.EM1Comparison.em1ToTorsor; em1ToTorsor-base; em1ToTorsor-loop}{The map is defined by upstream \texttt{rec'} with target \texttt{isGroupoidLeftTorsorModuli G}, basepoint \texttt{torsorBase G}, and coherence \texttt{regularTorsorLoop-comp G}.}
+
+\subsection{The basepoint loop map}
+The upstream library proves that the loop type of $\mathsf{EM}_1(G)$ at its basepoint is equivalent to the carrier of $G$. The local development proves that $p:G\to \Loop(\GTorsLevel,b_G)$ is an equivalence. Consequently, the map on basepoint loops induced by $f$ is an equivalence.
+
+\begin{proposition}
+The pointed map in \eqref{eq:em-map} induces an equivalence on loops at the displayed basepoints.
+\end{proposition}
+\begin{proof}
+Identify a loop in $\mathsf{EM}_1(G)$ with an element $g:G$ using the upstream equivalence $\Omega\mathsf{EM}_1\mathsf{Iso}$. The computation rule for $f$ identifies the image of the loop with $p(g)$. The map $p$ is an equivalence by the regular-torsor loop calculation. Their composite is therefore an equivalence.
+\end{proof}
+
+\formal{\texttt{EM1Comparison.agda}}{TorsorDelooping.EM1Comparison.isEquiv-em1ToTorsor-baseLoop}{The proof combines the upstream loop calculation with the local regular-torsor loop equivalence.}
+\upstream{\texttt{Properties.agda}}{ΩEM₁Iso; isConnectedEM₁; isGroupoidEM₁}
+
+\subsection{Why a universe lift appears}
+The moduli of small torsors is one universe level higher than an individual small carrier. More precisely, for $G$ at level $\ell$, the checked moduli type is in $\Type_{\ell+1}$. The original $\mathsf{EM}_1(G)$ is at level $\ell$. The local global comparison therefore uses
+\begin{equation}
+\widetilde{\mathsf{EM}}_1(G)\coloneqq\operatorname{Lift}_{\ell+1}(\mathsf{EM}_1(G)).
+\label{eq:lifted-em}
+\end{equation}
+and the map induced by lowering the lift. The lift is equivalent to the original type, but it places both sides in the same universe required by the Whitehead criterion used below.
+
+\formal{\texttt{UniverseLiftedComparison.agda}}{TorsorDelooping.UniverseLiftedComparison.LiftedEM₁; liftedEm1ToTorsor}{The definition applies the next universe lift to the library delooping, then applies the unlifted comparison map.}
+
+\subsection{A Whitehead criterion}
+The upstream theorem $\Omega\mathrm{Equiv}\to\mathrm{Equiv}$ applies to a map between types in the same universe. It asks for an equivalence on set truncations and an equivalence on loop maps at every point. Both sides of \eqref{eq:lifted-em} are connected. Therefore their set truncations are contractible, so the induced map of set truncations is an equivalence. The basepoint loop equivalence propagates to every point by connectedness and elimination into the proposition that a function is an equivalence.
+
+\begin{theorem}[Verified global comparison]
+\label{thm:em-torsor}
+For every set-level group $G:\mathsf{Group}_\ell$, there is an equivalence of types
+\begin{equation}
+\widetilde{\mathsf{EM}}_1(G)\simeq \GTorsLevel.
+\label{eq:em-equivalence}
+\end{equation}
+\end{theorem}
+\begin{proof}
+The lifted source is connected and a $1$-type because lifting preserves these properties and the corresponding statements hold for $\mathsf{EM}_1(G)$. The target is connected and a $1$-type by Section~4. The set-truncation map is an equivalence because both truncations are contractible. The induced loop map is an equivalence at every lifted point by transporting the basepoint result along connectedness. Applying the Whitehead criterion produces the equivalence \eqref{eq:em-equivalence}.
+\end{proof}
+
+\formal{\texttt{UniverseLiftedComparison.agda}}{liftedEm1ToTorsorEquiv}{The exact checked result is the lifted source equivalence displayed in Theorem~\ref{thm:em-torsor}.}
+\upstream{\texttt{WhiteheadsLemma.agda}}{ΩEquiv→Equiv}
+
+\begin{warning}
+Theorem 5.2 is an equivalence of underlying types. The comparison map preserves the specified basepoint by a checked path, but the result is not packaged as a pointed equivalence. Nor does the theorem package a group isomorphism between loop groups. The regular-loop multiplication law used to define the map is the precise group-level compatibility established here.
+\end{warning}

@@ -69,7 +69,7 @@ Transport and monodromy
 Computational topological quantum transformations
 ```
 
-## Current foundational milestone
+## Current foundational milestones
 
 **Group Presentations as Homotopy Pushouts — Foundational Construction v0.1**
 is the current stable-foundation milestone.  It provides the parameterized
@@ -80,11 +80,19 @@ a group isomorphism, a classifying-space equivalence, or computational
 transport.  Subsequent work may build on this boundary while investigating
 the complex multiplicative group, torsors, and computational delooping.
 
+**Torsor-Based Delooping — Generic Construction v0.1** is a checked
+generic development of left actions, left torsors, torsor moduli, and their
+universe-lifted delooping characterizations. It proves equivalences of
+*types* between the relevant lifted delooping types and the moduli of left
+torsors. It neither constructs the complex multiplicative group nor supplies
+geometric torsors, dependent computational transport, or Definition 6.7.
+
 ## Formalized developments
 
 | Component | Language | Status | Verified results | Outstanding results |
 |---|---|---|---|---|
 | [Group presentations as homotopy pushouts](docs/FORMALIZATIONS.md#group-presentations-as-homotopy-pushouts) | Cubical Agda | Foundational Construction v0.1 | Surjectivity of the canonical presentation homomorphism; checked Br(3) presentation instance | Injectivity, the resulting group isomorphism, the classifying-space equivalence, and computational transport |
+| [Torsor-based delooping](docs/FORMALIZATIONS.md#torsor-based-delooping) | Cubical Agda | Generic construction | Left-torsor moduli, universe-lifted EM₁ comparison, and a universe-lifted path-torsor characterization | C×, geometric structures, dependent computational transport, and Definition 6.7 |
 
 Detailed source modules, precise theorem statements, and the verified boundary
 are maintained in [docs/FORMALIZATIONS.md](docs/FORMALIZATIONS.md) and

@@ -1,0 +1,56 @@
+\section{The Moduli Type of Torsors}
+\label{ch:moduli}
+
+\subsection{Why form a moduli type?}
+A single torsor records a symmetry situation without a preferred origin. The type of all torsors records how such situations vary. In ordinary mathematics one often calls the resulting groupoid the groupoid of $G$-torsors: objects are torsors and arrows are equivariant equivalences. Homotopy type theory presents the same groupoid internally, with equalities of structured objects playing the role of isomorphisms.
+
+This change of viewpoint is decisive. Instead of declaring isomorphic torsors equivalent by an external convention, univalence identifies equivalence of carriers with equality of types, and the Structure Identity Principle extends that identification to the torsor structures.
+
+\subsection{Structure on a carrier}
+Fix a universe level $\ell$. For a set $X: \Type_\ell$, the data of an action comprise an operation $G\to X\to X$ and its unit and associativity laws. The torsor axioms add mere inhabitation and contractible transporters. Write
+\begin{equation}
+\GTorsLevel
+\end{equation}
+for the type of a carrier equipped with this full structure. In the checked development this type lies in $\Type_{\ell+1}$ when $G: \Type_\ell$: quantifying over carriers in $\Type_\ell$ raises the universe level.
+
+\begin{remark}[Why the axioms are propositions]
+The law fields of an action are propositions because the carrier is a set. Mere inhabitation is a proposition by construction, and contractibility is a proposition. Therefore the structure has no further choices beyond its operation. This is exactly the hypothesis that allows a univalent structure theorem to apply.
+\end{remark}
+
+\formal{\texttt{Moduli.agda}}{TorsorDelooping.Moduli.ActionAxioms; TorsorAxioms; isPropActionAxioms; isPropTorsorAxioms}{The operation is inherited from Cubical's left-action structure; all additional law fields are proved propositional.}
+
+\subsection{Equivalences of torsors}
+Given torsors $T$ and $U$, an equivariant equivalence is an equivalence of their carriers which commutes with the actions. Write
+\begin{equation}
+\operatorname{TorsEquiv}(T,U)
+\end{equation}
+for this type. It is important that the equivariance proof is part of the structure. It is not enough merely to know that the carriers are equivalent: arbitrary equivalences need not respect the $G$-action.
+
+\begin{definition}[Structure identity for torsors]
+The Structure Identity Principle for torsors is an equivalence
+\begin{equation}
+\operatorname{TorsEquiv}(T,U) \simeq (T=U).
+\label{eq:sip}
+\end{equation}
+Thus a path in the moduli type is represented by an equivariant equivalence, and every equivariant equivalence produces such a path.
+\end{definition}
+
+\paragraph{Mathematical explanation.}
+Univalence identifies an equivalence $e:X\simeq Y$ with a path $X=Y$ in the universe. Transporting the action structure along that path asks precisely that $e$ conjugate the action on $X$ to the action on $Y$. The remaining torsor fields are propositions, so their transports carry no independent choices. Consequently, an equivalence of carriers plus equivariance is exactly a path of torsor structures. The formal proof applies the library SIP theorem to the nested action and torsor structures.
+
+\formal{\texttt{Moduli.agda}}{TorsorDelooping.Moduli.torsorPathEquiv}{This is the exact checked form of Equation \eqref{eq:sip}.}
+\upstream{\texttt{SIP.agda}}{SIP}
+
+\subsection{What equality now means}
+Equation \eqref{eq:sip} is not a slogan that ``isomorphic objects are equal'' in an unqualified sense. It is an equivalence between an explicitly specified type of structured equivalences and an identity type of a particular univalent structure. It depends on the carrier being in a universe, on univalence for that universe, and on the proof-irrelevance of the axiom fields.
+
+\begin{example}[A torsor and its translate]
+Let $X$ be a $G$-torsor and let $a:X$. The orbit equivalence $g\mapsto g\cdot a$ identifies the regular torsor with $X$. By the SIP it gives a path from the regular point of the moduli type to the point represented by $X$. Replacing $a$ by another point generally gives a different path, but the existence of such a path is all that connectedness requires.
+\end{example}
+
+\subsection{A warning about paths and composition}
+An equality in a moduli type has a concatenation operation. An equivariant equivalence has composition. Equation \eqref{eq:sip} alone does not permit one to silently replace concatenation by composition: a coherence theorem is required, and its orientation depends on conventions. The regular-torsor coherence needed later is proved separately using the computation of SIP on carrier paths and the univalence law for composition.
+
+\begin{warning}
+The paper will use the SIP to pass between paths and equivariant equivalences, but it will not assert a general unstated theorem that SIP preserves composition. Only the restricted regular-translation coherence actually checked in the development is used for the $\mathsf{EM}_1$ comparison.
+\end{warning}

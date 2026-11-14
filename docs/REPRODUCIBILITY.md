@@ -70,3 +70,32 @@ construction for the standard two-generator, one-relation braid presentation.
 It proves the corresponding relation coherence and specializes the existing
 surjectivity theorem; it does not identify its output with an independently
 defined classical braid group or classifying space.
+
+## Torsor-delooping check
+
+The generic torsor development is checked independently from the stable
+GroupPresentation milestone:
+
+```sh
+for file in $(find src/TorsorDelooping -name '*.agda' | sort); do
+  agda --safe -i src -i cubical "$file" || exit $?
+done
+```
+
+At the Torsor-Based Delooping v0.1 audit this ranges over twelve modules and returns exit
+status zero with no diagnostics. It does not alter the pinned Cubical checkout.
+
+The shadow paper is a UTF-8 XeLaTeX exposition, not an additional proof
+artifact:
+
+```sh
+cd papers/TorsorDelooping
+latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex
+```
+
+Its checked declarations are listed in
+[`src/TorsorDelooping/`](../src/TorsorDelooping/) and traced in
+[`alignment/records.jsonl`](../alignment/records.jsonl). The global results
+are universe-lifted equivalences of types; they should not be read as a new
+formal group-isomorphism theorem, a construction of `C×`, or an
+implementation of dependent computational transport.

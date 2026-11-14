@@ -1,0 +1,101 @@
+\section{Torsor Moduli as a Delooping}
+\label{ch:delooping}
+
+\subsection{The regular basepoint}
+The regular left torsor defines a canonical point
+\begin{equation}
+b_G:\mathbf{1}\longrightarrow \GTorsLevel.
+\end{equation}
+We call its value the regular basepoint. Although a general torsor has no selected element, the regular torsor has a canonical element $1\in G$, so it is the natural reference object in the moduli type.
+
+\formal{\texttt{Delooping.agda}}{TorsorDelooping.Delooping.torsorBase}{The basepoint is obtained by embedding \texttt{regularLeftTorsor G} into the SIP moduli type.}
+
+\subsection{Connectedness}
+\begin{proposition}
+The moduli type $\GTorsLevel$ is connected.
+\end{proposition}
+\begin{proof}
+Let $T$ be a torsor. Its carrier is merely inhabited. To prove that the regular basepoint and $T$ are merely path equal, we may eliminate this truncation into the proposition $\Trunc{b_G=T}_{-1}$. Thus choose $x:T$ temporarily. The orbit map
+\begin{equation}
+G\longrightarrow T, \qquad g\longmapsto g\cdot x,
+\end{equation}
+is equivariant for the regular action and the action of $T$. By Proposition 2.2 it is an equivalence; by the SIP it yields a path $b_G=T$. Reintroducing propositional truncation gives a mere path. Since every point is merely connected to $b_G$, the moduli type is connected.
+\end{proof}
+
+The proof illustrates a characteristic use of propositional truncation. We choose a point only while constructing a proposition, so the result does not select an origin for any torsor.
+
+\formal{\texttt{Delooping.agda}}{TorsorDelooping.Delooping.merelyBasePath; isConnectedLeftTorsorModuli}{The implementation constructs the equivariant orbit map, converts it to a SIP path, and eliminates mere inhabitation into a mere path.}
+
+\subsection{The moduli is a one-type}
+\begin{proposition}
+The moduli type $\GTorsLevel$ is a $1$-type.
+\end{proposition}
+\begin{proof}
+Given torsors $T,U$, Equation \eqref{eq:sip} identifies their path type with the type of equivariant equivalences $T\simeq U$. The carrier types are sets. The type of equivalences between sets is a set, and the equivariance condition is a proposition. Therefore the type of equivariant equivalences is a set. Hence every path type of the moduli is a set, which is exactly the assertion that the moduli is a $1$-type.
+\end{proof}
+
+\formal{\texttt{Delooping.agda}}{TorsorDelooping.Delooping.isGroupoidLeftTorsorModuli}{Cubical's name \texttt{isGroupoid} expresses that all path types are sets, i.e. that the type is $1$-truncated.}
+
+\subsection{Automorphisms of the regular torsor}
+Loops at $b_G$ are, by the SIP, equivariant automorphisms of the regular torsor. Such an automorphism has a concrete form.
+
+\begin{proposition}[Regular-torsor automorphisms]
+Evaluation at the identity induces an equivalence
+\begin{equation}
+\operatorname{Aut}_G(G)\simeq G,
+\end{equation}
+where $\operatorname{Aut}_G(G)$ denotes the equivariant self-equivalences of the regular left torsor. An element $h:G$ corresponds to right multiplication
+\begin{equation}
+R_h(x)\coloneqq xh.
+\label{eq:right-translation}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Right multiplication is equivariant because
+\begin{equation}
+R_h(gx)=(gx)h=g(xh)=gR_h(x).
+\end{equation}
+It is invertible with inverse $R_{h^{-1}}$. Conversely, if $f:G\to G$ is equivariant, then
+\begin{equation}
+f(x)=f(x\cdot 1)=x\cdot f(1)=xf(1).
+\end{equation}
+Thus $f=R_{f(1)}$. Evaluation at $1$ and $h\mapsto R_h$ are mutually inverse.
+\end{proof}
+
+\formal{\texttt{Delooping.agda}}{TorsorDelooping.Delooping.regularAutIsoGroup}{The inverse map is \texttt{rightRegularAut}; the forward map evaluates at the group unit.}
+
+\subsection{Loop types and orientation}
+Combining the inverse SIP equivalence with the preceding proposition gives
+\begin{equation}
+\Loop(\GTorsLevel,b_G)\simeq G
+\label{eq:looptype}
+\end{equation}
+as an equivalence of underlying types. Its direction in the source code is from loops to the carrier of $G$.
+
+\formal{\texttt{Delooping.agda}}{torsorLoopEquivGroup}{The checked declaration gives the underlying equivalence from the basepoint loop type to the carrier of $G$.}
+
+\begin{warning}[Type equivalence is not yet a group isomorphism]
+Loop concatenation equips the left side of \eqref{eq:looptype} with a group structure. The displayed checked declaration alone does not package preservation of multiplication, units, and inverses. The next section proves the particular multiplication coherence needed for the $\mathsf{EM}_1$ recursor; it should not be read as a separately packaged general loop-group isomorphism theorem.
+\end{warning}
+
+\subsection{The SIP composition coherence actually used}
+Let $p(g)$ denote the loop obtained from the right-translation automorphism $R_g$ by the SIP. With the convention that composition first applies $R_g$ and then $R_h$, Equation \eqref{eq:right-translation} gives
+\begin{equation}
+R_h(R_g(x))=(xg)h=x(gh)=R_{gh}(x).
+\end{equation}
+The local composition convention therefore yields an equality of equivariant equivalences corresponding to $R_{gh}$. Passing to paths requires an additional calculation.
+
+\begin{proposition}[Regular SIP coherence]
+For $g,h:G$,
+\begin{equation}
+p(gh)=p(g)\mathbin{\cdot}p(h),
+\label{eq:sip-coherence}
+\end{equation}
+where the product on the right is path concatenation.
+\end{proposition}
+\begin{proof}
+The carrier path underlying the SIP image of an equivariant equivalence is its univalence path. The univalence composition theorem identifies the carrier path of the composite $R_g$ followed by $R_h$ with the concatenation of the carrier paths of $R_g$ and $R_h$. The two structured paths have equal carrier paths. Since the remaining structure fields are propositional, equality of their carrier paths lifts to equality of the full torsor paths. Finally the equality of right translations identifies the composite with $R_{gh}$. This proves \eqref{eq:sip-coherence}.
+\end{proof}
+
+\formal{\texttt{LoopGroup.agda}; \texttt{SIPPathEmbedding.agda}; \texttt{SIPCoherence.agda}}{rightRegularAut-comp; caracTorsor≡; regularTorsorLoop-comp}{The proof combines the local right-translation composition law, the structured-path embedding, and the upstream univalence-composition theorem.}
+\upstream{\texttt{Univalence.agda}}{uaCompEquiv}

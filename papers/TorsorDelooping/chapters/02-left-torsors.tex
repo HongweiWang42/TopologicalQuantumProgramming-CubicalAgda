@@ -1,0 +1,85 @@
+\section{Left Torsors and Equivariant Maps}
+\label{ch:left-torsors}
+
+\subsection{Actions and transporters}
+Fix a set-level group $G$ and a set $X$. A left action is a function
+\begin{equation}
+\alpha:G\times X\longrightarrow X, \qquad (g,x)\longmapsto g\cdot x,
+\end{equation}
+satisfying the two usual laws. We use left actions throughout. Thus the order convention is
+\begin{equation}
+(gh)\cdot x=g\cdot(h\cdot x).
+\label{eq:left-action-law}
+\end{equation}
+Keeping this convention visible prevents a later ambiguity: automorphisms of the regular left torsor are naturally given by \emph{right} multiplication.
+
+\begin{definition}[Transporter and left torsor]
+For $x,y:X$, define the transporter type
+\begin{equation}
+\operatorname{Trans}_G(x,y)\coloneqq\sum_{g:G}(g\cdot x=y).
+\end{equation}
+A left $G$-torsor is a set $X$ with a left action, a proof of $\Trunc{X}_{-1}$, and a proof that $\operatorname{Trans}_G(x,y)$ is contractible for all $x,y:X$.
+\end{definition}
+
+Contractibility says more than nonemptiness. It gives a centre $(g,p)$ and says that every other group element/path pair is equal to it. When all types involved are sets, this is exactly the assertion that there is one and only one element transporting $x$ to $y$.
+
+\formal{\texttt{LeftAction.agda}}{TorsorDelooping.LeftAction.LeftAction}{The fields are \texttt{isSetX}, \texttt{act}, \texttt{act-unit}, and \texttt{act-comp}; Equation \eqref{eq:left-action-law} is the last field.}
+\formal{\texttt{LeftTorsor.agda}}{TorsorDelooping.LeftTorsor.IsLeftTorsor; LeftTorsor}{Mere inhabitation is the upstream \agda{∥ X ∥₁}, Cubical's notation for propositional (hence $(-1)$-) truncation; the contractible transporter is the field \texttt{regular}.}
+
+\begin{proposition}[Orbit criterion]
+Let $X$ carry a left $G$-action. The following are equivalent.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For every $x,y:X$, $\operatorname{Trans}_G(x,y)$ is contractible.
+\item For every $x:X$, the orbit map $\operatorname{orb}_x:G\to X$, $g\mapsto g\cdot x$, is an equivalence.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+The fiber of $\operatorname{orb}_x$ over $y$ is, by definition,
+$\sum_{g:G}(g\cdot x=y)$. Thus condition (i) says exactly that every fiber is contractible, which is the standard characterization of an equivalence. Conversely an equivalence has contractible fibers, giving (i).
+\end{proof}
+
+\begin{remark}
+In the local development the orbit criterion is used in the direction from contractible transporters to equivalences. It is named \texttt{orbitEquiv}. The proof relies only on the definition of \texttt{isEquiv} by contractible fibers.
+\end{remark}
+
+\formal{\texttt{Morphisms.agda}}{TorsorDelooping.Morphisms.orbitEquiv}{The checked result sends a torsor, a point $x$, and a target $y$ to the equivalence induced by the corresponding contractible transporter.}
+
+\subsection{The regular torsor}
+\begin{proposition}[The regular left torsor]
+The left action of $G$ on itself is a left $G$-torsor.
+\end{proposition}
+\begin{proof}
+Mere inhabitation is witnessed by $1\in G$. For $x,y:G$, a transporter is an element $g$ together with $gx=y$. The unique solution is $g=yx^{-1}$. Indeed, $(yx^{-1})x=y$ by associativity and inverse cancellation. If $gx=y$, multiplying on the right by $x^{-1}$ gives $g=yx^{-1}$; all equality data are propositions because $G$ is a set. Hence the transporter is contractible.
+\end{proof}
+
+Notice a subtle but useful asymmetry. The action is by left multiplication, whereas the proof may equivalently identify the transporter by the right translation $g\mapsto gx$. Cubical's upstream group library supplies this right-translation automorphism directly.
+
+\formal{\texttt{Regular.agda}}{TorsorDelooping.Regular.regularLeftTorsor}{The centre of mere inhabitation is the unit. Regularity is discharged through the upstream right-multiplication automorphism.}
+
+\subsection{Equivariant maps}
+\begin{definition}
+Let $X$ and $Y$ be left $G$-actions. A function $f:X\to Y$ is equivariant when
+\begin{equation}
+f(g\cdot x)=g\cdot f(x)
+\end{equation}
+for all $g$ and $x$. Equivariant maps have identities and compose.
+\end{definition}
+
+\begin{proposition}[An equivariant map of torsors is an equivalence]
+Let $f:X\to Y$ be an equivariant map between left $G$-torsors. Then $f$ is an equivalence.
+\end{proposition}
+\begin{proof}
+The assertion that $f$ is an equivalence is a proposition. We may therefore eliminate the merely inhabited source torsor and temporarily choose $x:X$. Equivariance says precisely that the two orbit maps satisfy
+\begin{equation}
+  f \circ \operatorname{orb}_x =
+  \operatorname{orb}_{f(x)}.
+\end{equation}
+The two orbit maps are equivalences by the orbit criterion. Hence $f$ is a composite of equivalences, and therefore an equivalence. Since the conclusion was propositional, the temporary choice of $x$ is eliminated.
+\end{proof}
+
+The displayed equality is only mnemonic; no commutative-square package is needed in the checked proof. The proof is nevertheless significant: it explains why morphisms in the groupoid of torsors are automatically invertible.
+
+\formal{\texttt{Morphisms.agda}}{TorsorDelooping.Morphisms.equivariant-id; equivariant-comp; equivariantMapIsEquiv}{The final proof uses propositional-truncation elimination into the proposition \texttt{isEquiv f}.}
+
+\subsection{Pointings and trivializations}
+A point $x:X$ of a torsor is a trivialization: the orbit equivalence $G\simeq X$ identifies $g$ with $g\cdot x$. A different point changes this identification by a translation. Thus pointed torsors are equivalent to copies of $G$, while unpointed torsors are the correct origin-free objects. This distinction will reappear when the regular torsor is used as a basepoint of a moduli type.

@@ -13,7 +13,7 @@ It does not assert that the listed constructions have been formalized, that
 the displayed architecture is sufficient for the intended result, or that
 executable quantum gates have been implemented.
 
-## Verified foundation
+## Verified foundations
 
 The current verified component is the presentation-pushout development: the
 canonical homomorphism from the algebraically presented group to the
@@ -22,6 +22,15 @@ surjective. Its injectivity, the associated group isomorphism, and the
 classifying-space equivalence remain open. See
 [FORMALIZATIONS.md](FORMALIZATIONS.md) for the exact theorem and source
 boundary.
+
+A second verified generic layer constructs left `G`-torsors and their moduli
+for an arbitrary set-level group, together with universe-lifted equivalences
+from the library delooping `EM₁ G` and, under explicitly supplied pointed
+loop-group data, from a general connected 1-type. These are type-level
+equivalences; this does not yet instantiate `G` as `C×`, provide geometric
+torsor structure, or implement a dependent family and its transport. See
+[FORMALIZATIONS.md](FORMALIZATIONS.md#torsor-based-delooping) for exact
+declarations and hypotheses.
 
 ## Proposed formalization programme
 
@@ -62,8 +71,8 @@ the present repository.
 
 ## Open implementation challenges
 
-The relationship between the verified group-presentation foundation and the
-proposed later structures requires additional mathematical and formal work.
-In particular, no current source proves a braid-group action, constructs the
-required torsor or classifying-type machinery, formalizes Definition 6.7, or
-establishes a computational realization of topological quantum gates.
+The relationship between the verified foundations and the proposed later
+structures requires additional mathematical and formal work. In particular,
+no current source proves a braid-group action, constructs `C×` or its
+geometric torsors, formalizes the dependent families of Definition 6.7, or
+establishes computational transport or topological quantum gates.

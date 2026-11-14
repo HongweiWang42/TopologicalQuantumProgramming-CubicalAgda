@@ -85,3 +85,64 @@ The source-traceable article is available as the
 with its compiled [PDF](../papers/GroupPresentations/main.pdf). The detailed
 verified/in-progress/not-yet-formalized inventory remains in
 [FORMALIZATION_STATUS.md](FORMALIZATION_STATUS.md).
+
+## Torsor-based delooping
+
+**Milestone:** **Torsor-Based Delooping — Generic Construction v0.1**.
+**Language:** Cubical Agda. **Status:** type-checked generic
+construction.
+
+For a set-level `G : Group ℓ`, the development defines left `G`-actions,
+left `G`-torsors, and their moduli type `LeftTorsorModuli ℓ G`. A torsor
+is merely inhabited and has contractible transporter types
+`(Σ g , g • x ≡ y)`. The regular torsor is the left action of `G` on
+itself. The moduli construction uses SIP to identify paths with equivariant
+equivalences.
+
+The checked global comparison accounts for the universe level of the moduli:
+
+```agda
+liftedEm1ToTorsorEquiv : (G : Group ℓ) →
+  LiftedEM₁ G ≃ LeftTorsorModuli ℓ G
+```
+
+Here `LiftedEM₁ G = Lift (ℓ-suc ℓ) (EM₁ G)`. More generally, a pointed,
+connected 1-type equipped with a type equivalence from `G` to its loop type,
+plus explicit unit and multiplication path coherences, satisfies:
+
+```agda
+liftedPathTorsorModuliEquiv : (G : Group ℓ) {BG : Type ℓ} {pt : BG} →
+  PointedLoopGroupData G BG pt →
+  Lift (ℓ-suc ℓ) BG ≃ LeftTorsorModuli ℓ G
+```
+
+These are equivalences of underlying types. The development proves the
+restricted regular-loop multiplication coherence needed by `EM₁.rec'`, but
+does not package either result as a new group-isomorphism theorem.
+
+### Source modules
+
+- [LeftAction.agda](../src/TorsorDelooping/LeftAction.agda) and
+  [LeftTorsor.agda](../src/TorsorDelooping/LeftTorsor.agda) -- left actions
+  and the merely inhabited, free/transitive torsor condition.
+- [Regular.agda](../src/TorsorDelooping/Regular.agda) and
+  [Morphisms.agda](../src/TorsorDelooping/Morphisms.agda) -- regular torsors,
+  equivariant maps and equivalences.
+- [Moduli.agda](../src/TorsorDelooping/Moduli.agda),
+  [SIPPathEmbedding.agda](../src/TorsorDelooping/SIPPathEmbedding.agda), and
+  [SIPCoherence.agda](../src/TorsorDelooping/SIPCoherence.agda) -- moduli,
+  SIP paths, and regular-translation composition coherence.
+- [Delooping.agda](../src/TorsorDelooping/Delooping.agda) and
+  [LoopGroup.agda](../src/TorsorDelooping/LoopGroup.agda) -- connectedness,
+  1-truncation level, and the underlying loop-type equivalence.
+- [EM1Comparison.agda](../src/TorsorDelooping/EM1Comparison.agda) and
+  [UniverseLiftedComparison.agda](../src/TorsorDelooping/UniverseLiftedComparison.agda)
+  -- the `EM₁` map and its universe-lifted equivalence.
+- [PathTorsor.agda](../src/TorsorDelooping/PathTorsor.agda) -- the general
+  path-torsor characterization.
+
+The source-traceable exposition is the
+[Torsor Delooping Shadow Paper](../papers/TorsorDelooping/README.md). It marks
+the difference between checked declarations and explanatory prose. The next
+targets (`C×`, geometric structure, dependent transport, and Definition 6.7)
+are not formalized by this development.

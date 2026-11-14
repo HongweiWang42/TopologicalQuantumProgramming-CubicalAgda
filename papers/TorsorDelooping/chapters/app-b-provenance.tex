@@ -1,0 +1,66 @@
+\section{Upstream Provenance and Reproducibility}
+\label{app:provenance}
+
+\subsection{Pinned environment}
+The audited environment is Agda \texttt{2.8.0-3d04bac} with the project-local Cubical Agda checkout at commit
+\begin{center}
+\texttt{87af036ebd1c87956cf08fea44e62c7cf76392ca}.
+\end{center}
+The project library descriptor enables Cubical and guardedness options. The local development is checked module by module with explicit include paths, rather than relying on a globally registered Agda library.
+
+\subsection{Reproducibility command}
+From the repository root, the complete local check is:
+{\small\begin{verbatim}
+for file in $(find src/TorsorDelooping -name '*.agda' | sort); do
+  agda --safe -i src -i cubical "$file" || exit $?
+done
+\end{verbatim}}
+At the time of this draft the command ranges over twelve modules. A successful run returns exit status zero and no Agda diagnostics. The checked modules use neither postulates nor unresolved holes. The option \texttt{--lossy-unification} appears in the universe-lifted and path-torsor modules as a unification heuristic; the modules nevertheless pass Agda's \texttt{--safe} check and it does not add an axiom or an unsafe option.
+
+\subsection{Principal upstream interfaces}
+\begingroup\small\raggedright
+\begin{description}[font=\normalfont\bfseries]
+\item[Group right translations]
+\texttt{cubical/Cubical/Algebra/Group/Properties.agda}\par
+\agda{·GroupAutomorphismR}.
+\item[Univalence composition]
+\texttt{cubical/Cubical/Foundations/Univalence.agda}\par
+\agda{uaCompEquiv}.
+\item[Structure Identity Principle]
+\texttt{cubical/Cubical/Foundations/SIP.agda}\par
+\agda{SIP}.
+\item[The $\mathsf{EM}_1$ recursor]
+\texttt{cubical/Cubical/HITs/EilenbergMacLane1/Properties.agda}\par
+\agda{rec'}.
+\item[Connectedness and loop calculation for $\mathsf{EM}_1$]
+\texttt{cubical/Cubical/Homotopy/EilenbergMacLane/Properties.agda}\par
+\agda{isConnectedEM₁}, \agda{isGroupoidEM₁}, \agda{ΩEM₁Iso}.
+\item[Whitehead criterion]
+\texttt{cubical/Cubical/Homotopy/WhiteheadsLemma.agda}\par
+\agda{ΩEquiv→Equiv}.
+\item[Connectedness tools]
+\texttt{cubical/Cubical/Homotopy/Connected.agda}\par
+\agda{isConnectedSuc→isSurjection}, \agda{isConnectedRetractFromIso}.
+\end{description}
+\endgroup
+
+The SIP and univalence interfaces are imported rather than reconstructed locally. The local contribution is the construction of the relevant univalent torsor structure and the concrete coherence calculation allowing the $\mathsf{EM}_1$ recursor to be used.
+
+\subsection{Repository navigation}
+The source tree is organized in dependency order:
+\begin{verbatim}
+LeftAction -> LeftTorsor -> Regular, Morphisms -> Moduli
+Moduli -> Delooping, LoopGroup -> SIPCoherence
+                                      -> EM1Comparison
+EM1Comparison -> UniverseLiftedComparison -> PathTorsor
+\end{verbatim}
+The repository's \texttt{alignment/records.jsonl} contains machine-readable statement-to-source records. The source-relative paths in Appendix~A are deliberately retained instead of URLs to a moving branch. Once this milestone is committed and tagged, they can be linked to the corresponding immutable tag without altering the claims of this article.
+
+\subsection{Boundary of verification}
+The local code proves the type-theoretic statements indexed in Appendix~A. The paper's elementary mathematical explanations are not individually formal artifacts, and its bibliographic comparison with Lemma~5.8 is interpretive. No claim in this paper establishes a geometric model for $B\mathbb{C}^{\times}$, a computational transport operation, a braid-group action, or Definition~6.7. These remain future work.
+
+\begin{thebibliography}{9}
+\bibitem{cubical} Cubical Agda contributors. \emph{Cubical Agda standard library}. Pinned project checkout at the revision above. \url{https://github.com/agda/cubical}.
+\bibitem{agda} The Agda Team. \emph{Agda 2.8.0-3d04bac}. \url{https://agda.readthedocs.io/}.
+\bibitem{mss} David Jaz Myers, Hisham Sati, and Urs Schreiber. \emph{Topological Quantum Gates in Homotopy Type Theory}. \emph{Communications in Mathematical Physics} \textbf{405}, Article 172 (2024). \url{https://doi.org/10.1007/s00220-024-05020-8}. arXiv:\url{https://arxiv.org/abs/2303.02382}.
+\end{thebibliography}

@@ -1,0 +1,105 @@
+\section{The General Path-Torsor Characterization}
+\label{ch:path-torsors}
+
+Section~5 compares a particular library delooping with the torsor moduli type. The more intrinsic statement begins with an arbitrary pointed connected $1$-type and asks whether it can be recognized as a torsor moduli type from its loop data.
+
+\subsection{The input data}
+\begin{definition}[Pointed loop-group data]
+Let $G$ be a set-level group, $\BG: \Type_\ell$, and $pt:\BG$. Pointed loop-group data consist of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a proof that $\BG$ is connected, written $\operatorname{isConnected}(2,\BG)$;
+\item a proof that $\BG$ is a $1$-type, written $\operatorname{isGroupoid}(\BG)$;
+\item an equivalence $e:G\simeq(pt=pt)$;
+\item a unit path $e(1)=\mathsf{refl}$; and
+\item multiplication paths $e(gh)=e(g)\mathbin{\cdot}e(h)$ for all $g,h:G$.
+\end{enumerate}
+\end{definition}
+
+The last two items are not cosmetic. They orient the chosen loop equivalence so that left multiplication in $G$ acts by left path concatenation. Without them, an underlying equivalence between $G$ and the loop type does not supply the action law used below.
+
+\formal{\texttt{PathTorsor.agda}}{TorsorDelooping.PathTorsor.PointedLoopGroupData}{The five fields are \texttt{isConnectedBG}, \texttt{isGroupoidBG}, \texttt{loopEquiv}, \texttt{loop-unit}, and \texttt{loop-comp}.}
+
+\subsection{Path torsors}
+Fix such data and a point $t:BG$. Define the carrier
+\begin{equation}
+P_t\coloneqq(pt=t).
+\end{equation}
+Define a left $G$-action by
+\begin{equation}
+g\cdot q\coloneqq e(g)\mathbin{\cdot}q, \qquad q:pt=t.
+\label{eq:path-action}
+\end{equation}
+Here the first product is group multiplication and the second is path concatenation. The unit law follows from $e(1)=\mathsf{refl}$ and the left unit law for paths. The action law follows from the multiplication path for $e$ and associativity of concatenation:
+\begin{align*}
+(gh)\cdot q&=e(gh)\mathbin{\cdot}q \\\
+&=(e(g)\mathbin{\cdot}e(h))\mathbin{\cdot}q \\\
+&=e(g)\mathbin{\cdot}(e(h)\mathbin{\cdot}q)=g\cdot(h\cdot q).
+\end{align*}
+
+\formal{\texttt{PathTorsor.agda}}{TorsorDelooping.PathTorsor.pathTorsorAction}{The action is exactly left path concatenation; the code proves its unit and multiplication laws using \texttt{loop-unit} and \texttt{loop-comp}.}
+
+\subsection{The torsor property}
+\begin{proposition}
+For every $t:BG$, the action in \eqref{eq:path-action} makes $P_t$ into a left $G$-torsor.
+\end{proposition}
+\begin{proof}
+Connectedness gives a merely existing path $p:pt=t$, so $P_t$ is merely inhabited. Fix such a path $p$. The orbit map at $p$ is
+\begin{equation}
+G\longrightarrow (pt=t), \qquad g\longmapsto e(g)\mathbin{\cdot}p.
+\end{equation}
+It is the composite of the equivalence $e:G\simeq(pt=pt)$ with right composition by $p$, which is an equivalence from loops at $pt$ to paths from $pt$ to $t$. Therefore every fiber of the orbit map is contractible. By the orbit criterion, the transporter from any $x:P_t$ to any $y:P_t$ is contractible. Together with mere inhabitation, this is the torsor condition.
+\end{proof}
+
+\formal{\texttt{PathTorsor.agda}}{TorsorDelooping.PathTorsor.pathTorsorInhabited; pathTorsorOrbitEquiv; pathTorsor}{The inhabitance proof maps connectedness-induced mere paths into propositional truncation; regularity is the fiber contractibility of the composite equivalence.}
+\upstream{\texttt{Connected.agda}}{isConnectedSuc→isSurjection; isConnectedPoint}
+
+\subsection{The classifying map and its basepoint}
+Sending $t$ to the path torsor $P_t$ defines
+\begin{equation}
+F:\BG\longrightarrow \GTorsLevel.
+\label{eq:path-classifying}
+\end{equation}
+When $t=pt$, the carrier is the loop type. The chosen equivalence $e:G\simeq(pt=pt)$ is equivariant from the regular torsor to $P_{pt}$ precisely because of the multiplication coherence. The SIP therefore gives a basepoint comparison path
+\begin{equation}
+b_G=F(pt).
+\label{eq:base-comparison}
+\end{equation}
+
+\formal{\texttt{PathTorsor.agda}}{TorsorDelooping.PathTorsor.pathTorsorModuli; pathTorsorBaseEquiv; pathTorsorModuli-base}{The local code supplies an equivariant equivalence and then its SIP path.}
+
+\begin{remark}[Basepoint data versus pointed equivalences]
+There is also a definitional path stating that the lifted map takes $\operatorname{lift}(pt)$ to $F(pt)$. Combining it with \eqref{eq:base-comparison} produces a basepoint comparison. The final equivalence below is not packaged in Cubical Agda as a pointed equivalence object; these paths are separate checked declarations.
+\end{remark}
+
+\formal{\texttt{PathTorsor.agda}}{TorsorDelooping.PathTorsor.liftedPathTorsorModuli-base}{The declaration identifies the lifted basepoint image with the unlifted path-torsor moduli point.}
+
+\subsection{Loop maps}
+To compare loops, first observe that a path $q:s=t$ in $\BG$ acts on path torsors by right composition:
+\begin{equation}
+(pt=s)\longrightarrow(pt=t), \qquad p\longmapsto p\mathbin{\cdot}q.
+\end{equation}
+This map is equivariant for the left actions, hence SIP turns it into a path $F(s)=F(t)$. Univalence computes the carrier path of that SIP path. This establishes that the action of $F$ on equality paths agrees with the intended transport equivalence.
+
+At the basepoint, equivariant automorphisms of $P_{pt}$ are equivalent to loops at $pt$ by evaluation at $\mathsf{refl}$. Together with the SIP, this proves that the induced basepoint loop map of $F$ is an equivalence. Connectedness then extends this to every point.
+
+\formal{\texttt{PathTorsor.agda}}{TorsorDelooping.PathTorsor.pathTorsorTransportEquiv; pathTorsorModuli-cong; pathTorsorAutLoopIso; isEquiv-pathTorsorModuli-loop}{The calculation uses \texttt{pathFamily-ua}, the SIP carrier computation, and propositional-truncation elimination to move from the basepoint to arbitrary points.}
+
+\subsection{The lifted theorem}
+Universe levels again matter: $\BG$ lies in $\Type_\ell$, whereas the torsor moduli type lies one universe higher. Let $\operatorname{Lift}_{\ell+1}(\BG)$ denote the lift. Define the lifted classifying map by lowering the lift and applying $F$.
+
+\begin{theorem}[Universe-lifted path-torsor characterization]
+\label{thm:path-torsor}
+Given pointed loop-group data for $(G,\BG,pt)$, there is an equivalence of underlying types
+\begin{equation}
+\operatorname{Lift}_{\ell+1}(\BG)\simeq \GTorsLevel.
+\label{eq:path-torsor-equivalence}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Lifting preserves connectedness and the $1$-type property. The moduli target is connected and a $1$-type by Section~4. The preceding discussion gives an equivalence on loop maps at all lifted points. Both set truncations are contractible by connectedness, hence the induced map on set truncations is an equivalence. The same Whitehead criterion used in Section~5 yields \eqref{eq:path-torsor-equivalence}.
+\end{proof}
+
+\formal{\texttt{PathTorsor.agda}}{TorsorDelooping.PathTorsor.liftedPathTorsorModuliEquiv}{The exact checked result is the universe-lifted equivalence displayed in Theorem~\ref{thm:path-torsor}.}
+
+\subsection{Relation to Lemma 5.8}
+Equation \eqref{eq:path-torsor-equivalence} is a universe-lifted path-torsor characterization associated with Lemma 5.8 of Myers--Sati--Schreiber. It is not an unconditional theorem asserting $\BG\simeq\GTors$ from a bare informal phrase ``the loop group is $G$.'' The input explicitly includes connectedness, $1$-truncation, a chosen loop-type equivalence, and chosen unit and multiplication coherences. It also does not identify the result with a geometric principal-bundle construction.

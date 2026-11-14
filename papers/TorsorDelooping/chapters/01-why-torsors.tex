@@ -1,0 +1,43 @@
+\section{Why Torsors?}
+\label{ch:why}
+
+Symmetry is often presented by a group acting on a set. The group records transformations and its unit is a distinguished transformation. In many geometric and physical situations, however, the object on which the transformations act has no preferred origin. A coordinate frame in an affine space, a choice of phase for a nonzero complex number, and a choice of trivialization of a principal bundle are all examples: after one choice has been made, every other choice is obtained by a unique symmetry, but no choice is privileged.
+
+The correct object for this situation is a torsor. A torsor remembers the action of a group but deliberately forgets the identity element as a point of the acted-on space. The loss of a chosen point is not a defect. It is precisely what makes torsors appropriate for moduli problems and for the construction of classifying spaces.
+
+\subsection{The regular action}
+Let $G$ be a group, written multiplicatively, with unit $1$. The most familiar left action of $G$ is its action on itself by left multiplication:
+\begin{equation}
+g\cdot x \coloneqq gx.
+\end{equation}
+The action laws are $1\cdot x=x$ and $(gh)\cdot x=g\cdot(h\cdot x)$. The carrier $G$ does have a preferred point, namely $1$, but that point is extra data: the action itself does not mention it.
+
+\begin{example}[Changing origins]
+Let $V$ be a vector space. The translations of $V$ form an additive group. An affine space modelled on $V$ has points but no canonical zero. Given two affine points $x$ and $y$, there is a unique translation carrying $x$ to $y$. Thus an affine space is a torsor for the translation group. Choosing an origin identifies it with $V$, but different origins give different identifications.
+\end{example}
+
+\begin{example}[Phases]
+The unit circle group $U(1)$ acts on a one-dimensional complex Hilbert space by scalar multiplication. On the set of unit vectors in a fixed complex line, this action is free and transitive. A unit vector is a phase choice; the torsor records phase differences without selecting a reference phase.
+\end{example}
+
+\subsection{Torsors as symmetry without an origin}
+The phrase ``free and transitive'' is traditionally used for torsors. Freeness says that no nonidentity group element fixes a point. Transitivity says that any point can be reached from any other. Together they say that, once an origin $x$ is temporarily selected, the orbit map
+\begin{equation}
+\operatorname{orb}_x:G\longrightarrow X, \qquad g\longmapsto g\cdot x
+\end{equation}
+is a bijection. In homotopy type theory, ``bijection'' is replaced by equivalence, and the most useful formulation says that every fiber of the orbit map is contractible. This retains the unique-transporter idea while behaving correctly in a homotopical setting.
+
+\begin{remark}[Why ``mere'' inhabitation?]
+A torsor should not contain a selected point. Therefore one asks only that its carrier be inhabited after propositional truncation, written $\Trunc{X}_{-1}$, rather than providing a point of $X$. This supplies enough existence to prove invariant propositions, but it prevents a construction from extracting a canonical origin. The distinction is essential in the connectedness proof for the torsor moduli type.
+\end{remark}
+
+\subsection{From sets to types}
+The present development works with a set-level group. Its carrier is a set in the homotopy-theoretic sense, so equality between group elements is a proposition. A torsor carrier is also required to be a set. Consequently, the interesting higher structure appears not inside an individual torsor but in the type of all torsors: paths between torsors encode equivalences of structures.
+
+The central theme of this article is that this moduli type behaves as a delooping of $G$. Informally, a delooping $\BG$ is a connected pointed $1$-type whose loop space at the basepoint has underlying type equivalent to $G$. The word ``underlying'' matters. An equivalence of loop types is not automatically a group isomorphism with respect to a chosen multiplication unless compatibility is proved and packaged.
+
+\subsection{Formal scope}
+The local Cubical Agda development begins with generic groups and generic torsors. It does not yet specialize to $\mathbb{C}^{\times}$, construct geometric principal bundles, or define computational transport. Those are later applications. The present result is a reusable homotopy-theoretic foundation.
+
+\formal{\texttt{Regular.agda}}{TorsorDelooping.Regular.regularLeftAction; regularLeftTorsor}{The regular left action and its torsor structure are formalized for every set-level Cubical group.}
+\upstream{\texttt{Properties.agda}}{·GroupAutomorphismR}

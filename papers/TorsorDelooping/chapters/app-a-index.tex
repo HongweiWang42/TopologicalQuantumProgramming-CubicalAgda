@@ -1,0 +1,48 @@
+\section{Statement-to-Declaration Index}
+\label{app:index}
+
+This is a provenance index, not a second proof. ``Local'' means a declaration in \texttt{src/TorsorDelooping/}; ``upstream'' means the pinned Cubical checkout. Repository-relative paths can later be attached to an immutable milestone tag without changing the mathematical text.
+
+\subsection*{Local construction index}
+\begingroup\small\raggedright
+\begin{description}[font=\normalfont\bfseries]
+\item[Actions and torsors]
+\texttt{src/TorsorDelooping/LeftAction.agda}\par
+\agda{TorsorDelooping.LeftAction.LeftAction}, \agda{TorsorDelooping.LeftAction.Equivariant}.\par
+\texttt{src/TorsorDelooping/LeftTorsor.agda}\par
+\agda{TorsorDelooping.LeftTorsor.IsLeftTorsor}.\par
+\texttt{src/TorsorDelooping/Regular.agda}\par
+\agda{regularLeftAction}, \agda{regularLeftTorsor}.
+
+\item[Equivariant maps]
+\texttt{src/TorsorDelooping/Morphisms.agda}\par
+\agda{equivariant-id}, \agda{equivariant-comp}, \agda{orbitEquiv}, \agda{equivariantMapIsEquiv}.
+
+\item[Moduli and structure identity]
+\texttt{src/TorsorDelooping/Moduli.agda}\par
+\agda{LeftTorsorModuli}, \agda{TorsorEquiv}, \agda{torsorPathEquiv}.
+
+\item[Structured-path embedding]
+\texttt{src/TorsorDelooping/SIPPathEmbedding.agda}\par
+\agda{caracTorsor≡}. This proves that structured torsor paths are determined by their carrier paths; it is used in the SIP coherence calculation.
+
+\item[Delooping structure]
+\texttt{src/TorsorDelooping/Delooping.agda}\par
+\agda{torsorBase}, \agda{isConnectedLeftTorsorModuli}, \agda{isGroupoidLeftTorsorModuli}, \agda{regularAutIsoGroup}, \agda{rightRegularAut}, \agda{torsorLoopEquivGroup}.
+
+\item[Composition coherence]
+\texttt{src/TorsorDelooping/LoopGroup.agda}: \agda{rightRegularAut-comp}.\par
+\texttt{src/TorsorDelooping/SIPCoherence.agda}: \agda{torsorPath-carrier}, \agda{regularTorsorLoop}, \agda{regularTorsorLoop-comp}.
+
+\item[Comparison with the library delooping]
+\texttt{src/TorsorDelooping/EM1Comparison.agda}: \agda{em1ToTorsor}, \agda{isEquiv-em1ToTorsor-baseLoop}.\par
+\texttt{src/TorsorDelooping/UniverseLiftedComparison.agda}: \agda{LiftedEM₁}, \agda{liftedEm1ToTorsor}, \agda{liftedEm1ToTorsorEquiv}.
+
+\item[General path-torsor theorem]
+\texttt{src/TorsorDelooping/PathTorsor.agda}\par
+\agda{PointedLoopGroupData}, \agda{pathTorsorAction}, \agda{pathTorsor}, \agda{pathTorsorModuli}, \agda{pathTorsorModuli-base}, \agda{liftedPathTorsorModuli-base}, \agda{liftedPathTorsorModuliEquiv}.
+\end{description}
+\endgroup
+
+\subsection*{Narrative statements without a one-to-one declaration}
+The elementary examples of affine spaces and phase torsors, and the expository proofs supplied in Sections~1--4, are mathematical exposition. They explain the checked definitions and constructions but are not separate Agda modules. Likewise, the discussion of later applications to $\mathbb{C}^{\times}$ and Definition~6.7 is explicitly prospective, not a verified construction.

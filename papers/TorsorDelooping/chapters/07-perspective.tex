@@ -1,0 +1,43 @@
+\section{Mathematical Perspective}
+\label{ch:perspective}
+
+\subsection{What has been established}
+The development establishes a generic theorem about set-level groups and torsors in Cubical Agda.
+\begin{enumerate}[label=\arabic*.]
+\item Left $G$-actions, left $G$-torsors, equivariant maps, and the regular torsor are defined and verified.
+\item The moduli type of left torsors is constructed by a univalent structured-type construction. Its paths are equivalent to equivariant equivalences.
+\item The torsor moduli is connected and a $1$-type. Its loop type at the regular torsor is equivalent, as a type, to the carrier of $G$.
+\item The restricted coherence for regular right translations is proved: the loops used in the $\mathsf{EM}_1$ recursor respect multiplication in the required orientation.
+\item The lifted library delooping is equivalent, as a type, to the torsor moduli.
+\item More generally, a pointed connected $1$-type equipped with explicit compatible loop-group data admits the universe-lifted path-torsor equivalence of Section~6.
+\end{enumerate}
+
+These results give a precise internal realization of the familiar slogan that a connected delooping is the moduli of torsors for its loop group. The qualifier ``precise'' is important: the universe lift and every compatibility datum are present in the formal theorem.
+
+\subsection{Local results and inherited results}
+The local work proves the torsor-specific constructions: the transporter formulation, regularity, the moduli structure, connectedness, the regular-loop coherence, and the two global comparison maps. It relies on existing Cubical Agda mathematics for univalence, SIP, higher inductive Eilenberg--Mac Lane types, truncations, connectedness tools, and the Whitehead criterion.
+
+One should distinguish this division of labour from a distinction in mathematical validity. The local proof terms are checked relative to the upstream library. The library results are also checked in the pinned checkout. Appendix B records the key interfaces and the exact pinned revision.
+
+\subsection{Three levels of structure}
+It is useful to separate three statements that are easily conflated.
+\begin{enumerate}[label=\textbf{Level \arabic*:},leftmargin=2.3cm]
+\item An equivalence of underlying types, such as \eqref{eq:em-equivalence} or \eqref{eq:path-torsor-equivalence}. This is what the two final declarations provide.
+\item A basepoint comparison path. For the $\mathsf{EM}_1$ map, the image of the basepoint is definitionally the regular torsor. For the general path-torsor map, the source basepoint is related to the regular torsor through the separately checked SIP path of Equation \eqref{eq:base-comparison}.
+\item A group-level identification. Such a statement would require a group structure on the loop type and a packaged proof that a specified equivalence preserves multiplication, unit, and inverse. The current milestone proves the regular multiplication coherence required by the recursor, but does not expose a new group-isomorphism record as its endpoint.
+\end{enumerate}
+
+\subsection{Limitations}
+The text has deliberately stayed at the generic level. It does not formalize the complex multiplicative group $\mathbb{C}^{\times}$, a topology on that group, smooth or geometric principal torsors, or a comparison with a conventional construction of $B\mathbb{C}^{\times}$. It constructs no dependent type family over a braid-group or torsor delooping, no monodromy representation, and no computational transport operation.
+
+Accordingly, this milestone is not a formalization of Definition 6.7 of Myers--Sati--Schreiber. The eventual programme needs additional ingredients: a suitable model of the relevant group or higher group, a family of types over its classifying type, a proof that the desired loops act through transport, and a computational analysis of that transport.
+
+\subsection{A route toward later applications}
+The generic result is nevertheless useful for later work. If a candidate group $G$ and a candidate pointed connected $1$-type $\BG$ are supplied, Section~6 says exactly which data are needed to compare $\BG$ with the moduli of $G$-torsors. In particular, an informal identification of loops is insufficient: one must expose its unit and multiplication coherences. This is a valuable design constraint for any later construction involving $\mathbb{C}^{\times}$, torsor classifiers, or braid-group actions.
+
+\begin{remark}
+The same discipline applies to computational claims. A type-theoretic existence proof of a transport map is not yet evidence that the transport has useful reduction behaviour. That question remains open and should be studied with concrete dependent families rather than inferred from the present delooping theorem.
+\end{remark}
+
+\subsection{Reading the formalization notes}
+Every correspondence note in this article names a local source-relative path and a checked declaration. Such a note means that the indicated construction, or the indicated exact statement, occurs in the local Cubical Agda source. It does not mean that the prose proof is definitionally identical to the proof term, nor that every intermediate sentence has a separate declaration. Upstream notes identify imported verified interfaces. Appendix A is the consolidated statement-to-declaration index.

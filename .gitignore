@@ -8,6 +8,7 @@ _build/
 *.fls
 *.log
 *.out
+*.toc
 *.xdv
 
 # Local historical paper copy; the current paper is papers/GroupPresentations/main.tex.
