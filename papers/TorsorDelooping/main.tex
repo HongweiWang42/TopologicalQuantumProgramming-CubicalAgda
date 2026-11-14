@@ -38,34 +38,25 @@
 \renewcommand{\theformalization}{\thesection.\arabic{formalization}}
 \newcommand{\formal}[3]{\par\smallskip\noindent\begingroup\footnotesize\sffamily\setlength{\parindent}{0pt}\leftskip=1em\rightskip=0pt plus 1fil\refstepcounter{formalization}\textbf{Formalization~\theformalization.} \textbf{File:} #1. \textbf{Declaration:} \agda{#2}. #3\par\endgroup\smallskip}
 \newcommand{\upstream}[2]{\par\smallskip\noindent\begingroup\footnotesize\sffamily\setlength{\parindent}{0pt}\leftskip=1em\rightskip=0pt plus 1fil\refstepcounter{formalization}\textbf{Upstream interface~\theformalization.} \textbf{File:} #1. \textbf{Declaration:} \agda{#2}.\par\endgroup\smallskip}
-% Retain amsart's article layout while matching the repository's title-case
-% title and mixed-case author/email convention.
+% Retain amsart's article layout while matching the title block used by the
+% GroupPresentations article in this repository.
 \makeatletter
-\def\@settitle{\begin{center}\baselineskip14\p@\relax\bfseries\@title\end{center}}
+\def\@settitle{%
+  \begin{center}
+    \LARGE\bfseries \@title
+  \end{center}}
 \def\@setauthors{%
-  \begingroup
-  \def\thanks{\protect\thanks@warning}%
-  \trivlist
-  \centering\footnotesize\@topsep30\p@\relax
-  \advance\@topsep by -\baselineskip
-  \item\relax
-  \author@andify\authors
-  \def\\{\protect\linebreak}%
-  \authors
-  \ifx\@empty\contribs
-  \else
-    ,\penalty-3 \space \@setcontribs
-    \@closetoccontribs
-  \fi
-  \endtrivlist
-  \endgroup
-}
+  \begin{center}
+    \large
+    \def\\{\protect\linebreak}%
+    \authors
+  \end{center}}
 \makeatother
-\title[Torsors, Univalence, and Delooping]{Torsors, Univalence, and Delooping\\[0.35em]\textnormal{A Mathematical Companion to a Cubical Agda Formalization}}
+\title[Torsors, Univalence, and Delooping]{Torsors, Univalence, and Delooping\\[0.35em]\large\textnormal{A Mathematical Companion to a Cubical Agda Formalization}}
 \author{Hongwei (Alex) Wang\\[3pt]
 \small New York University Abu Dhabi\\
 \small \texttt{hw4375@nyu.edu}}
-\dedicatory{\normalfont 14 November 2026}
+\dedicatory{\normalfont\normalsize 14 November 2026}
 
 \begin{document}
 \begin{abstract}
