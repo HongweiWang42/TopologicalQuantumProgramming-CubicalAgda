@@ -1,0 +1,43 @@
+\section{Reproducibility and publication record}
+\label{app:reproducibility}
+
+\subsection{Formal environment}
+The recorded environment is Agda \texttt{2.8.0-3d04bac}, the project-local
+Cubical checkout at
+\begin{center}
+\texttt{87af036ebd1c87956cf08fea44e62c7cf76392ca},
+\end{center}
+and Brough's external \texttt{hott-reals} thesis branch at
+\begin{center}
+\texttt{9fcc142b86d0c1e2bd6d06f86f7617200ad74857}.
+\end{center}
+The project descriptor records the dependencies \texttt{cubical-0.9} and
+\texttt{hott-reals}, with
+\texttt{--safe --cubical --no-import-sorts --guardedness}.
+
+After registering the three library descriptors described in
+\texttt{src/ConstructiveComplex/README.md}, replay the checks sequentially:
+{\small\begin{verbatim}
+agda --safe --cubical --no-import-sorts --guardedness \
+  --library=urs-group-presentation src/ConstructiveComplex/Complex.agda
+agda --safe --cubical --no-import-sorts --guardedness \
+  --library=urs-group-presentation src/ConstructiveComplex/Units.agda
+agda --safe --cubical --no-import-sorts --guardedness \
+  --library=urs-group-presentation src/ConstructiveComplex/Delooping.agda
+\end{verbatim}}
+The commands are intentionally sequential.  This paper does not run an Agda
+check as part of its LaTeX build.
+
+\subsection{Paper build}
+From this directory, build the companion with:
+{\small\begin{verbatim}
+latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex
+\end{verbatim}}
+The PDF is a derived documentation artifact.  It neither changes Agda source
+nor rebuilds dependency interfaces.
+
+\subsection{Licensing and attribution}
+The repository's \texttt{LICENSE} is MIT and applies to this new local
+documentation.  Cubical Agda and \texttt{hott-reals} remain external
+dependencies with their own repositories and provenance.  The paper cites
+their roles and exact revisions but vendors neither upstream source.

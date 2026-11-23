@@ -1,0 +1,54 @@
+\section{Regular torsors and delooping}
+\label{sec:torsors}
+
+\subsection{Left torsors and the regular example}
+For a set-level group $G$, a left torsor is a left $G$-action on a type $X$
+which is merely inhabited and has contractible transporter types
+\begin{equation}
+  \sum_{g:G}(g\cdot x=y)
+\end{equation}
+for all $x,y:X$.  The second condition is the type-theoretic free-and-
+transitive condition; the truncation in the first condition is important,
+since a general torsor has no selected origin.
+\formal{\texttt{src/TorsorDelooping/LeftTorsor.agda}}
+{\texttt{IsLeftTorsor}; \texttt{LeftTorsor}}
+{The fields are \agda{inhabited : ∥ X ∥₁} and the contractible-transporter field \texttt{regular}.}
+
+The regular left torsor is $G$ itself under left multiplication.  It is
+inhabited by $1$, and its transporter is contractible through the imported
+right-translation equivalence.  The use of right translations is compatible
+with the left action: it proves the needed regularity without changing the
+chosen action convention.
+\formal{\texttt{src/TorsorDelooping/Regular.agda}}
+{\texttt{regularLeftAction}; \texttt{regularLeftTorsor}}
+{Regularity uses \texttt{·GroupAutomorphismR}; the inhabitant is the group unit.}
+
+\subsection{The univalent moduli type}
+The generic construction first records a left action, then adds the
+propositional fields asserting sethood, the action laws, mere inhabitation,
+and contractible transporters.  The Structure Identity Principle therefore
+identifies paths of structured torsors with equivariant equivalences.  It
+constructs a moduli type $G\mathrm{Tors}_{L,\ell_X}$ and an equivalence
+\begin{equation}
+ \operatorname{TorsorEquiv}(T,U)\simeq(T=U).
+ \label{eq:sip-torsors}
+\end{equation}
+\formal{\texttt{src/TorsorDelooping/Moduli.agda}}
+{\texttt{LeftTorsorModuli}; \texttt{TorsorEquiv}; \texttt{torsorPathEquiv}; \texttt{fromLeftTorsor}}
+{\texttt{torsorPathEquiv} is the SIP equivalence; \texttt{fromLeftTorsor} embeds the regular-torsor record into the moduli type.}
+
+\subsection{The constructive complex basepoint}
+Set $G=\CHunits$.  The local units module supplies the regular torsor
+\agda{complexUnitsRegularLeftTorsor}; its image in the moduli type defines
+\begin{align}
+ \BG\CHunits&\coloneqq\CHunits\mathrm{Tors}_{L,0},\\
+ b_{\CHunits}&\coloneqq\text{the regular left $\CHunits$-torsor}.
+\end{align}
+The source records \agda{BComplexUnits : Type₁}; that universe level is
+inherited from the generic structured-type construction.
+\formal{\texttt{src/ConstructiveComplex/Units.agda}}
+{\texttt{complexUnitsRegularLeftTorsor}}
+{This is the regular torsor of \texttt{ComplexUnitsGroup}.}
+\formal{\texttt{src/ConstructiveComplex/Delooping.agda}}
+{\texttt{BComplexUnits}; \texttt{bComplexUnits}}
+{Both are direct specializations of \texttt{LeftTorsorModuli} and \texttt{torsorBase}.}

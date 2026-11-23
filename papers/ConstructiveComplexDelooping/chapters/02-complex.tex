@@ -1,0 +1,71 @@
+\section{Constructive complex numbers}
+\label{sec:complex}
+
+\subsection{Carrier and operations}
+Let $R=\mathbb{R}_{\mathrm H}$.  The formal carrier is the product
+$\CH=R\times R$.  Its operations are
+\begin{align}
+0_{\CH}&=(0,0), & 1_{\CH}&=(1,0),\\
+(a,b)+(c,d)&=(a+c,b+d), & -(a,b)&=(-a,-b),\\
+(a,b)(c,d)&=(ac-bd,ad+bc),\\
+i&=(0,1), & \overline{(a,b)}&=(a,-b).
+\end{align}
+Thus the imaginary unit and conjugation are checked definitions, although no
+separate theorem about $i^2$ or conjugation multiplicativity is claimed by
+these modules.
+
+\formal{\texttt{src/ConstructiveComplex/Complex.agda}}
+{\texttt{Complex}; \texttt{complexZero}; \texttt{complexOne}; \texttt{complexAdd}; \texttt{complexNeg}; \texttt{complexMul}; \texttt{imaginaryUnit}; \texttt{complexConjugate}}
+{These are definitions, with the displayed coordinate formula for multiplication.}
+
+The only HoTT Reals declarations used directly are the carrier
+\agda{HoTTReals.Data.Real.Base.ℝ}, the set proof
+\agda{RealProperties.ℝ-isSet}, and the commutative-ring package
+\agda{RealMultiplication.ℝCommutativeRing}.  The local development does not
+reproduce Brough's construction of real numbers.
+
+\upstream{\texttt{HoTTReals/Data/Real/Base.agda}}{\texttt{ℝ}}
+\upstream{\texttt{HoTTReals/Data/Real/Properties.agda}}{\texttt{ℝ-isSet}}
+\upstream{\texttt{HoTTReals/Data/Real/Algebra/Multiplication.agda}}{\texttt{ℝCommutativeRing}}
+
+\subsection{Sethood and pair paths}
+Since $R$ is a set, its product is a set by the imported closure theorem
+\agda{isSet×}.  Equalities of complex numbers are assembled from equalities
+of real coordinates with \agda{ΣPathP}:
+\begin{equation}
+ a=b\ \text{and}\ c=d\quad\Longrightarrow\quad(a,c)=(b,d).
+\end{equation}
+\formal{\texttt{src/ConstructiveComplex/Complex.agda}}
+{\texttt{complexIsSet}; \texttt{pairPath}}
+{\texttt{complexIsSet} uses \texttt{isSet×}; the private helper \texttt{pairPath} is \texttt{ΣPathP}.}
+
+\subsection{The ring proof}
+\begin{proposition}
+The displayed operations make $\CH$ a commutative ring.
+\end{proposition}
+\begin{proof}
+All eight algebraic laws reduce to polynomial identities in the commutative
+ring $R$.  For example, associativity compares
+\begin{align*}
+(a,b)((c,d)(e,f))&=\bigl(a(ce-df)-b(cf+de),\ a(cf+de)+b(ce-df)\bigr),\\
+((a,b)(c,d))(e,f)&=\bigl((ac-bd)e-(ad+bc)f,\ (ac-bd)f+(ad+bc)e\bigr).
+\end{align*}
+The two coordinates agree by associativity, commutativity, distributivity,
+and additive-inverse laws in $R$; \agda{ΣPathP} then gives equality in
+$\CH$.  Addition, the unit and inverse laws, distributivity, and
+commutativity of multiplication are proved by the same coordinatewise
+method.  The sethood proof and these eight fields are precisely the data
+accepted by Cubical's commutative-ring constructor.
+\end{proof}
+
+The formal proof discharges each coordinate by the verified commutative-ring
+solver instantiated at Brough's ring, rather than treating the displayed
+calculation as an unchecked external argument:
+\begin{verbatim}
+complexMulAssociative (a , b) (c , d) (e , f) =
+  pairPath (solve! RealMultiplication.ℝCommutativeRing)
+           (solve! RealMultiplication.ℝCommutativeRing)
+\end{verbatim}
+\formal{\texttt{src/ConstructiveComplex/Complex.agda}}
+{\texttt{complexAddAssociative}; \texttt{complexAddUnitRight}; \texttt{complexAddInverseRight}; \texttt{complexAddCommutative}; \texttt{complexMulAssociative}; \texttt{complexMulUnitRight}; \texttt{complexMulDistributesOverAddLeft}; \texttt{complexMulCommutative}; \texttt{complexIsCommRing}; \texttt{ComplexCommRing}}
+{The eight local laws are combined by \texttt{makeIsCommRing}; \texttt{ComplexCommRing} is the resulting level-zero package.}

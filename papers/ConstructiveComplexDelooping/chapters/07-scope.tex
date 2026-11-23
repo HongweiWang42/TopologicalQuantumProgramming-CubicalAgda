@@ -1,0 +1,73 @@
+\section{Scope, limitations, and future work}
+\label{sec:scope}
+
+\subsection{What is established}
+The checked endpoint is concrete: a constructive complex commutative ring
+$\CH$, an algebraic group of units $\CHunits$, its regular left torsor, the
+torsor-moduli type $\BG\CHunits$, its canonical point, and the underlying
+type equivalence of Equation~\eqref{eq:main-result}.  The generic theory also
+establishes connectedness and one-truncation for the torsor moduli, though the
+constructive-complex module uses only the basepoint and loop equivalence.
+
+\subsection{Explicit non-results}
+The following statements are outside the current formal endpoint.
+\begin{enumerate}[label=\arabic*.]
+\item No coordinate-level apartness/nonzero characterization of algebraic
+complex units is proved.
+\item No group-level loop recovery theorem is packaged for
+\agda{complexUnitsLoopEquiv}.
+\item No general proof identifies complex-unit multiplication with loop
+concatenation for that displayed equivalence.
+\item No dependent-family transport computation or monodromy calculation is
+constructed.
+\item No quantum-gate realization is implemented.
+\item Myers--Sati--Schreiber Definition~6.7 is not formalized.
+\end{enumerate}
+
+These are not cosmetic omissions.  A group isomorphism requires a stated loop
+group structure and proofs preserving product, unit, and inverse.  A quantum
+transformation requires a specified dependent family, a loop or higher action
+on it, and an analysis of the corresponding transport.  Neither structure
+follows merely from the type equivalence already proved.
+
+\subsection{Next mathematical stages}
+A later development may choose a constructive apartness relation for complex
+numbers and prove its relation to algebraic units.  It may then formulate a
+group-level refinement of loop recovery with explicit orientation conventions.
+Only after specifying a dependent family over a candidate delooping could the
+project study transport, its computational behaviour, and its possible
+relationship with the topological-quantum motivation of \cite{mss}.  Those
+would be new formalization tasks rather than consequences of this paper.
+
+\begin{thebibliography}{9}
+\bibitem{hottbook}
+The Univalent Foundations Program.
+\newblock \emph{Homotopy Type Theory: Univalent Foundations of Mathematics}.
+\newblock Institute for Advanced Study, 2013.
+\newblock \url{https://homotopytypetheory.org/book/}.
+
+\bibitem{brough}
+Jackson Brough.
+\newblock \emph{hott-reals}, thesis branch, revision
+\texttt{9fcc142b86d0c1e2bd6d06f86f7617200ad74857}.
+\newblock \url{https://github.com/utahplt/hott-reals}.
+
+\bibitem{cubical}
+Cubical Agda contributors.
+\newblock \emph{Cubical Agda standard library}, v0.9-compatible line.
+\newblock Pinned project checkout:
+\texttt{87af036ebd1c87956cf08fea44e62c7cf76392ca}.
+\newblock \url{https://github.com/agda/cubical}.
+
+\bibitem{agda}
+The Agda Team.
+\newblock \emph{Agda 2.8.0-3d04bac}.
+\newblock \url{https://agda.readthedocs.io/}.
+
+\bibitem{mss}
+David Jaz Myers, Hisham Sati, and Urs Schreiber.
+\newblock \emph{Topological Quantum Gates in Homotopy Type Theory}.
+\newblock \emph{Communications in Mathematical Physics} \textbf{405},
+Article 172 (2024).
+\newblock \url{https://doi.org/10.1007/s00220-024-05020-8}.
+\end{thebibliography}

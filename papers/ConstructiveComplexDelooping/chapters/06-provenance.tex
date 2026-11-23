@@ -1,0 +1,82 @@
+\section{Formalization and proof provenance}
+\label{sec:provenance}
+
+The construction has four distinct sources of proof content.
+\begin{enumerate}[label=\textbf{\arabic*.}]
+\item \textbf{HoTT Reals.} Brough's \texttt{hott-reals} thesis-branch revision
+supplies $\mathbb{R}_{\mathrm H}$, its sethood, and its commutative-ring
+package.  No upstream real-number source is copied into this repository.
+\item \textbf{Cubical Agda.} The pinned library supplies sigma paths, h-level
+closure, the commutative-ring solver, the algebraic unit API, group packaging,
+univalence, SIP, and right-translation equivalences.
+\item \textbf{Existing CQTS torsor formalization.} The modules
+\texttt{TorsorDelooping.Regular}, \texttt{Moduli}, and \texttt{Delooping}
+prove the generic regular torsor, univalent moduli, and loop recovery used
+here.
+\item \textbf{New ConstructiveComplex layer.} The three local modules define
+the pair ring, its units group, and their specialization of the generic
+delooping.
+\end{enumerate}
+
+The following is the declaration-level correspondence; it is provenance, not
+an additional collection of claims.
+
+\begingroup\small
+\begin{longtable}{@{}p{0.28\textwidth}p{0.29\textwidth}p{0.33\textwidth}@{}}
+\toprule
+Mathematical statement & Agda declaration and source & Direct proof dependencies \\
+\midrule
+\endhead
+$\CH=R\times R$ with complex operations &
+\agda{Complex}, \agda{complexAdd}, \agda{complexMul};
+\texttt{Complex.agda} &
+Brough's \agda{ℝ}; definitions of product operations. \\
+
+$\CH$ is a commutative ring &
+\agda{complexIsCommRing}, \agda{ComplexCommRing};
+\texttt{Complex.agda} &
+\agda{ℝ-isSet}, \agda{ℝCommutativeRing}, \agda{isSet×},
+\agda{ΣPathP}, \agda{solve!}, \agda{makeIsCommRing}. \\
+
+Algebraic complex units form a set &
+\agda{complexUnitsIsSet}; \texttt{Units.agda} &
+\agda{complexIsSet}, \agda{∈-isProp}, \agda{isSetΣSndProp}. \\
+
+$\CHunits$ is a group &
+\agda{ComplexUnitsGroup}; \texttt{Units.agda} &
+Generic \agda{Units} closure/inverse facts, local complex laws, and
+\agda{makeGroup-right}. \\
+
+Regular left $\CHunits$-torsor &
+\agda{complexUnitsRegularLeftTorsor}; \texttt{Units.agda} &
+\agda{regularLeftTorsor} from \texttt{TorsorDelooping.Regular}. \\
+
+Torsor moduli and paths &
+\agda{LeftTorsorModuli}, \agda{torsorPathEquiv};
+\texttt{Moduli.agda} &
+Cubical structured types, propositional axioms, and SIP. \\
+
+Generic loop recovery &
+\agda{torsorBase}, \agda{torsorLoopEquivGroup};
+\texttt{Delooping.agda} &
+Regular torsor, SIP, \agda{·GroupAutomorphismR}, evaluation, and right
+translation. \\
+
+$\BG\CHunits$, basepoint, loop equivalence &
+\agda{BComplexUnits}, \agda{bComplexUnits},
+\agda{complexUnitsLoopEquiv}; \texttt{ConstructiveComplex/Delooping.agda} &
+Direct specialization at \agda{ComplexUnitsGroup}. \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+The recorded environment is Agda~2.8.0--3d04bac, with Cubical revision
+\begin{center}
+\texttt{87af036ebd1c87956cf08fea44e62c7cf76392ca}
+\end{center}
+and Brough's \texttt{hott-reals} revision
+\begin{center}
+\texttt{9fcc142b86d0c1e2bd6d06f86f7617200ad74857}.
+\end{center}
+Those revisions identify the interfaces cited above; the paper neither vendors
+nor modifies either upstream project.

@@ -1,0 +1,42 @@
+\documentclass[11pt]{amsart}
+\usepackage{../cqts-formalization-series}
+\newcommand{\CH}{\mathbb{C}_{\mathrm H}}
+\newcommand{\CHunits}{\mathbb{C}_{\mathrm H}^{\times}}
+\newcommand{\BG}{\mathbf{B}}
+\newcommand{\Loop}{\mathop{\Omega}}
+\newcommand{\Type}{\mathsf{Type}}
+\title[Constructive Complex Units and Their Torsor Delooping]{Constructive Complex Units and Their\\[0.35em]Torsor Delooping in Cubical Agda\\[0.35em]\large\textnormal{A Mathematical Companion to a CQTS Formalization}}
+\author{Hongwei (Alex) Wang\\[3pt]
+\small New York University Abu Dhabi\\
+\small \texttt{hw4375@nyu.edu}}
+\dedicatory{\normalfont\normalsize 23 November 2026}
+
+\begin{document}
+\begin{abstract}
+We document a Cubical Agda construction of constructive complex numbers from
+Jackson Brough's HoTT real numbers, their algebraic multiplicative units, and
+a torsor-moduli delooping.  The local code proves that
+$\CH=\mathbb{R}_{\mathrm H}\times\mathbb{R}_{\mathrm H}$ is a commutative
+ring, packages its algebraic units as a group $\CHunits$, and specializes an
+existing univalent torsor construction to a pointed type $\BG\CHunits$.
+The checked endpoint is an equivalence of underlying types
+$\Loop(\BG\CHunits)\simeq\CHunits$ at the regular-torsor basepoint.  This
+article supplies mathematical proofs and declaration-level provenance while
+keeping the boundary explicit: it proves neither a coordinate-level
+apartness criterion for units, nor a packaged group isomorphism on loops,
+nor dependent computational transport or quantum gates.
+\end{abstract}
+\maketitle
+\pagestyle{plain}
+
+\input{chapters/01-introduction}
+\input{chapters/02-complex}
+\input{chapters/03-units}
+\input{chapters/04-torsors}
+\input{chapters/05-loops}
+\input{chapters/06-provenance}
+\input{chapters/07-scope}
+\appendix
+\input{chapters/app-a-index}
+\input{chapters/app-b-reproducibility}
+\end{document}

@@ -1,0 +1,38 @@
+\section{Introduction and mathematical motivation}
+\label{sec:introduction}
+
+The CQTS project investigates whether suitably homotopical topological quantum
+transformations can acquire an executable realization as dependent-type
+transport in Cubical Agda.  The motivating perspective is the programme of
+Myers--Sati--Schreiber \cite{mss}.  Its later stages require precise higher
+types, dependent families over them, loops, and a computation analysis of
+transport.  None of those later constructions follows merely from naming a
+familiar group or classifying space.
+
+This paper records a completed smaller layer needed to formulate one possible
+such direction.  Jackson Brough's constructive HoTT real numbers provide a
+checked real-number object $\mathbb{R}_{\mathrm H}$.  From it the local
+development constructs
+\begin{equation}
+  \CH\coloneqq\mathbb{R}_{\mathrm H}\times\mathbb{R}_{\mathrm H},
+\end{equation}
+proves that it is a commutative ring, takes its algebraic units $\CHunits$,
+and applies the existing generic theory of left torsors.  The result is the
+pointed torsor-moduli type
+\begin{equation}
+ (\BG\CHunits,b_{\CHunits})\quad\text{with}\quad
+ \Loop(\BG\CHunits,b_{\CHunits})\simeq\CHunits .
+ \label{eq:main-result}
+\end{equation}
+
+The notation $\BG\CHunits$ is a name for this torsor-moduli construction, not
+a claim that a separate conventional geometric classifying-space model has
+been compared with it.  Equation~\eqref{eq:main-result} is the exact
+type-equivalence endpoint of the formalization.  It is neither a newly
+packaged group isomorphism nor a construction of a quantum gate.
+
+The argument is layered.  Section~\ref{sec:complex} gives the constructive
+complex ring; Section~\ref{sec:units} its algebraic unit group; and
+Sections~\ref{sec:torsors}--\ref{sec:loops} specialize the existing
+univalent torsor delooping and trace its loop computation.  The provenance
+map and reproducibility record are included in the appendices.

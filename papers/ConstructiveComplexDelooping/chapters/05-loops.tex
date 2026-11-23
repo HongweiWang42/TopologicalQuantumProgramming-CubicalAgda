@@ -1,0 +1,70 @@
+\section{Loop-space recovery}
+\label{sec:loops}
+
+\subsection{Loops as equivariant automorphisms}
+At the regular basepoint, the inverse of \eqref{eq:sip-torsors} gives
+\begin{equation}
+ \Loop(G\mathrm{Tors}_{L,\ell},b_G)\simeq\operatorname{Aut}_G(G),
+ \label{eq:loops-aut}
+\end{equation}
+where $G$ has the regular left action.  In the source this is
+\agda{torsorLoopEquivAut}, obtained by applying \agda{invEquiv} to
+\agda{torsorPathEquiv}.
+\formal{\texttt{src/TorsorDelooping/Delooping.agda}}
+{\texttt{torsorLoopEquivAut}}
+{The equivalence is from loops to structured equivariant self-equivalences of the regular torsor.}
+
+\subsection{Evaluation and right translations}
+Evaluation at the unit is the map $E(f)=f(1)$ from equivariant automorphisms
+to $G$.  Its inverse sends $h:G$ to the right translation
+\begin{equation}
+ R_h(x)=xh.
+ \label{eq:right-translation}
+\end{equation}
+It is equivariant for the left action because $R_h(gx)=(gx)h=g(xh)$.  It is
+invertible through $R_{h^{-1}}$.  Conversely, equivariance forces
+\begin{equation}
+ f(x)=f(x1)=xf(1)=R_{f(1)}(x).
+ \label{eq:equivariant-determined}
+\end{equation}
+Function extensionality proves equality of the underlying equivalences, and
+\agda{Σ≡Prop} lifts it through the propositional equivariance field.  Thus
+evaluation and right translation form an isomorphism.
+\formal{\texttt{src/TorsorDelooping/Delooping.agda}}
+{\texttt{regularAutToGroup}; \texttt{rightRegularAut}; \texttt{regularAutUnderlying}; \texttt{regularAutRet}; \texttt{regularAutIsoGroup}}
+{These declarations implement evaluation, right translation, extensional reconstruction, and the resulting \texttt{Iso}.}
+
+Composing \eqref{eq:loops-aut} with this isomorphism yields
+\begin{equation}
+ \Loop(G\mathrm{Tors}_{L,\ell},b_G)\simeq G.
+ \label{eq:generic-loop}
+\end{equation}
+\formal{\texttt{src/TorsorDelooping/Delooping.agda}}
+{\texttt{torsorLoopEquivGroup}}
+{Its implementation is \texttt{compEquiv torsorLoopEquivAut (isoToEquiv regularAutIsoGroup)}.}
+
+\subsection{Order conventions and the formal boundary}
+There is no hidden opposite group in this calculation.  If composition means
+first $R_g$ and then $R_h$, then
+\begin{equation}
+ R_h(R_g(x))=(xg)h=x(gh)=R_{gh}(x).
+\end{equation}
+This is the correct order for right translations acting as equivariant maps
+of a left torsor.  The generic CQTS development has a separate regular-loop
+coherence used for its $\mathsf{EM}_1$ construction, but
+\agda{torsorLoopEquivGroup} is not packaged as a group-isomorphism theorem.
+
+\begin{warning}[No group-level loop-recovery claim]
+Loop concatenation gives the source of \eqref{eq:generic-loop} a group
+structure, but the formal endpoint supplies only an equivalence of underlying
+types.  No formal theorem here asserts preservation of multiplication, unit,
+or inverse.
+\end{warning}
+
+For $G=\CHunits$, \eqref{eq:generic-loop} is the local declaration
+\begin{equation}
+ \Loop(\BG\CHunits,b_{\CHunits})\simeq\CHunits.
+\end{equation}
+\formal{\texttt{src/ConstructiveComplex/Delooping.agda}}
+{\texttt{complexUnitsLoopEquiv}}
+{This is definitionally \texttt{torsorLoopEquivGroup ComplexUnitsGroup}; its codomain is \texttt{ComplexUnits}.}

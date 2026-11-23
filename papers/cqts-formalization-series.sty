@@ -1,0 +1,86 @@
+% Shared presentation layer for the CQTS Formalization Series.
+% Each paper retains its own mathematical notation and document body.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{../cqts-formalization-series}[2026/11/23 CQTS Formalization Series style]
+
+\RequirePackage[letterpaper,margin=1in]{geometry}
+\RequirePackage{amsmath,amssymb,amsthm,mathtools,amscd}
+\RequirePackage{microtype}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{xurl}
+\RequirePackage{enumitem}
+\RequirePackage{booktabs,longtable,array}
+\RequirePackage{fontspec}
+\RequirePackage{unicode-math}
+\RequirePackage{xparse}
+
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Menlo}[Scale=MatchLowercase]
+\setmathfont{texgyretermes-math.otf}
+\newfontfamily\AgdaFont{Arial Unicode MS}[Scale=MatchLowercase]
+\DeclareFontShape{TU}{TimesNewRoman(0)}{m}{sc}
+  {<->ssub*TimesNewRoman(0)/m/n}{}
+\DeclareFontShape{TU}{ArialUnicodeMS(0)}{m}{it}
+  {<->ssub*ArialUnicodeMS(0)/m/n}{}
+\def\UrlFont{\AgdaFont}
+
+\setlength{\parskip}{0.25em}
+\setlength{\parindent}{1.25em}
+\setlength{\emergencystretch}{4em}
+\setlength{\abovedisplayskip}{0.8\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip}
+\setlength{\belowdisplayskip}{0.8\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip}
+\numberwithin{equation}{section}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}[definition]{Example}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{convention}[definition]{Convention}
+\newtheorem{warning}[definition]{Warning}
+
+% Literal UTF-8 Agda identifiers are intentionally retained in the source.
+\newcommand{\agda}[1]{{\AgdaFont #1}}
+\newcommand{\Agda}[1]{{\AgdaFont\nolinkurl{#1}}}
+\newcommand{\AgdaOptions}{{\AgdaFont\char123\#- OPTIONS --cubical --guardedness \#-\char125}}
+
+\newcounter{formalization}[section]
+\renewcommand{\theformalization}{\thesection.\arabic{formalization}}
+\newcommand{\cqtsprovenancenote}[2]{%
+  \par\smallskip\noindent\begingroup\footnotesize\sffamily
+  \setlength{\parindent}{0pt}\leftskip=1em\rightskip=0pt plus 1fil
+  \refstepcounter{formalization}\textbf{#1~\theformalization.} #2\par
+  \endgroup\smallskip}
+
+% Supports both the legacy one-argument GroupPresentations source references
+% and the file/declaration/explanation form used by the later companions.
+\NewDocumentCommand{\formal}{m g g}{%
+  \IfNoValueTF{#2}
+    {\cqtsprovenancenote{Formalization}{\textbf{Declaration:} \Agda{#1}.}}
+    {\cqtsprovenancenote{Formalization}{\textbf{File:} #1.
+      \textbf{Declaration:} \agda{#2}. #3}}}
+\newcommand{\upstream}[2]{%
+  \cqtsprovenancenote{Upstream interface}{\textbf{File:} #1.
+    \textbf{Declaration:} \agda{#2}.}}
+
+\newcommand{\CQTSFormalizationSeries}{CQTS Formalization Series}
+\makeatletter
+\AtBeginDocument{%
+  \pagestyle{plain}%
+  \def\@settitle{%
+    \begin{center}
+      {\small\sffamily \CQTSFormalizationSeries\par}
+      \vspace{0.55em}
+      {\LARGE\bfseries \@title\par}
+    \end{center}}%
+  \def\@setauthors{%
+    \begin{center}
+      \large\def\\{\protect\linebreak}%
+      \authors
+    \end{center}}}
+\makeatother

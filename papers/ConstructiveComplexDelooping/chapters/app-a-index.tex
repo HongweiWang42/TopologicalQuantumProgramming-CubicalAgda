@@ -1,0 +1,56 @@
+\section{Statement-to-declaration index}
+\label{app:index}
+
+This appendix gives repository-relative identifiers for the claims in the
+main text.  Upstream denotes the pinned Cubical or separate HoTT Reals
+checkout; generic CQTS denotes the pre-existing torsor development.
+
+\begingroup\small\raggedright
+\begin{description}[font=\normalfont\bfseries]
+\item[HoTT Reals (upstream)]
+\texttt{HoTTReals/Data/Real/Base.agda}: \agda{ℝ}.
+\texttt{HoTTReals/Data/Real/Properties.agda}: \agda{ℝ-isSet}.
+\texttt{HoTTReals/Data/Real/Algebra/Multiplication.agda}:
+\agda{ℝCommutativeRing}.
+
+\item[Constructive complex ring (new local)]
+\texttt{src/ConstructiveComplex/Complex.agda}: \agda{Complex},
+\agda{complexZero}, \agda{complexOne}, \agda{complexAdd},
+\agda{complexNeg}, \agda{complexMul}, \agda{imaginaryUnit},
+\agda{complexConjugate}, \agda{complexIsSet}, \agda{complexIsCommRing},
+\agda{ComplexCommRing}.
+
+\item[Algebraic units (new local)]
+\texttt{src/ConstructiveComplex/Units.agda}: \agda{ComplexUnits},
+\agda{complexUnitOne}, \agda{complexUnitMul}, \agda{complexUnitInv},
+\agda{complexUnitsIsSet}, \agda{ComplexUnitsGroup},
+\agda{complexUnitsRegularLeftTorsor}.
+
+\item[Generic torsor construction (CQTS)]
+\texttt{src/TorsorDelooping/Regular.agda}: \agda{regularLeftAction},
+\agda{regularLeftTorsor}.  \texttt{src/TorsorDelooping/Moduli.agda}:
+\agda{LeftTorsorModuli}, \agda{TorsorEquiv}, \agda{torsorPathEquiv},
+\agda{fromLeftTorsor}.
+
+\item[Generic loop recovery (CQTS)]
+\texttt{src/TorsorDelooping/Delooping.agda}: \agda{torsorBase},
+\agda{torsorLoopEquivAut}, \agda{regularAutToGroup},
+\agda{rightRegularAut}, \agda{regularAutIsoGroup},
+\agda{torsorLoopEquivGroup}.
+
+\item[Constructive-complex delooping (new local)]
+\texttt{src/ConstructiveComplex/Delooping.agda}: \agda{BComplexUnits},
+\agda{bComplexUnits}, \agda{complexUnitsLoopEquiv}.
+
+\item[Key Cubical interfaces (upstream)]
+\texttt{Cubical/Algebra/CommRing/Base.agda}: \agda{makeIsCommRing}.
+\texttt{Cubical/Tactics/CommRingSolver.agda}: \agda{solve!}.
+\texttt{Cubical/Algebra/CommRing/Properties.agda}: \agda{Units}.
+\texttt{Cubical/Algebra/Group/Base.agda}: \agda{makeGroup-right}.
+\texttt{Cubical/Algebra/Group/Properties.agda}: \agda{·GroupAutomorphismR}.
+\texttt{Cubical/Foundations/SIP.agda}: \agda{SIP}.
+\end{description}
+\endgroup
+
+The mathematical explanations in the main text explain checked constructions;
+they do not assert that every sentence is a separately named theorem.

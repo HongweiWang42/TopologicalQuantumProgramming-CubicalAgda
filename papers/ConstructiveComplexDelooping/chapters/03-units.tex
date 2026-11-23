@@ -1,0 +1,65 @@
+\section{The multiplicative group of complex units}
+\label{sec:units}
+
+\subsection{Algebraic units as a subtype}
+For a commutative ring $A$, Cubical's $A^{\times}$ is the predicate of
+elements equipped with multiplicative-inverse evidence.  The local definition
+is the dependent sum
+\begin{equation}
+ \CHunits\coloneqq\sum_{z:\CH}(z\in\CH^{\times}).
+ \label{eq:units-sigma}
+\end{equation}
+An element is a complex number together with algebraic evidence that it is a
+unit.  This uses neither a quotient nor a classical coordinate test for
+nonzero values.
+\formal{\texttt{src/ConstructiveComplex/Units.agda}}
+{\texttt{ComplexUnits}}
+{The definition is \texttt{Σ Complex U.Rˣ}, where \texttt{U = Units ComplexCommRing}.}
+
+Membership in the unit predicate is propositional by \agda{∈-isProp}.
+Therefore two unit records with equal first projections are equal, by
+\agda{Σ≡Prop}; and since $\CH$ is a set, the sigma type is a set by
+\agda{isSetΣSndProp}.
+\upstream{\texttt{Cubical/Foundations/Powerset.agda}}{\texttt{∈-isProp}}
+\upstream{\texttt{Cubical/Foundations/HLevels.agda}}{\texttt{isSetΣSndProp}; \texttt{Σ≡Prop}}
+\formal{\texttt{src/ConstructiveComplex/Units.agda}}
+{\texttt{complexUnitsIsSet}; \texttt{unitPath}}
+{The private \texttt{unitPath} lifts equality of underlying complex numbers to equality of units.}
+
+\subsection{Group operations and proof}
+Writing a unit as $(z,p)$, the source defines
+\begin{align}
+1_{\CHunits}&=(1,\text{unit evidence}),\\
+(z,p)(w,q)&=(zw,\text{closure evidence}),\\
+(z,p)^{-1}&=(z^{-1},\text{closure evidence}).
+\end{align}
+The generic \agda{Units} API supplies the evidence
+\agda{RˣContainsOne}, \agda{RˣMultClosed}, and \agda{RˣInvClosed}; its
+\agda{·-rinv} establishes $zz^{-1}=1$ for a certified unit.
+\upstream{\texttt{Cubical/Algebra/CommRing/Properties.agda}}{\texttt{Units.RˣContainsOne}; \texttt{Units.RˣMultClosed}; \texttt{Units.RˣInvClosed}; \texttt{Units.·-rinv}}
+\formal{\texttt{src/ConstructiveComplex/Units.agda}}
+{\texttt{complexUnitOne}; \texttt{complexUnitMul}; \texttt{complexUnitInv}}
+{These definitions instantiate the generic unit API at \texttt{ComplexCommRing}.}
+
+\begin{proposition}
+$\CHunits$ is a group under the displayed multiplication.
+\end{proposition}
+\begin{proof}
+For $u=(z,p)$, $v=(w,q)$, and $r=(t,s)$, associativity becomes
+$z(wt)=(zw)t$ after \agda{Σ≡Prop}, hence is
+\agda{complexMulAssociative}.  The right unit law similarly becomes
+\agda{complexMulUnitRight}, and the generic inverse theorem gives the right
+inverse.  Cubical's \agda{makeGroup-right} packages sethood and these three
+right-handed laws into a group; its record supplies the derived left unit and
+left inverse laws.
+\end{proof}
+\formal{\texttt{src/ConstructiveComplex/Units.agda}}
+{\texttt{complexUnitMulAssociative}; \texttt{complexUnitMulUnitRight}; \texttt{complexUnitMulInverseRight}; \texttt{ComplexUnitsGroup}; \texttt{complexUnitMulUnitLeft}; \texttt{complexUnitMulInverseLeft}}
+{The first three are inputs to \texttt{makeGroup-right}; the latter two are derived from the resulting \texttt{Group} record.}
+
+\begin{warning}[Boundary of the unit construction]
+No declaration proves an equivalence between algebraic unit membership and a
+coordinate-level apartness or nonzero condition on $(a,b)$.  In particular,
+the formalization does not claim a constructive coordinate criterion for
+membership in $\CHunits$.
+\end{warning}

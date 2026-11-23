@@ -1,4 +1,6 @@
 name: urs-group-presentation
 include: src
-  cubical
-flags: --cubical --guardedness
+depend:
+  cubical-0.9
+  hott-reals
+flags: --safe --cubical --no-import-sorts --guardedness

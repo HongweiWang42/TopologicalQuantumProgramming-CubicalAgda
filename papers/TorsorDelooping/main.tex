@@ -1,57 +1,11 @@
 \documentclass[11pt]{amsart}
-\usepackage[letterpaper,margin=1in]{geometry}
-\usepackage{amsmath,amssymb,amsthm,mathtools,amscd}
-\usepackage{microtype}
-\usepackage[hidelinks]{hyperref}
-\usepackage{enumitem}
-\usepackage{booktabs,longtable,array}
-\usepackage{fontspec}
-\usepackage{unicode-math}
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Menlo}[Scale=MatchLowercase]
-\setmathfont{texgyretermes-math.otf}
-\newfontfamily\AgdaFont{Arial Unicode MS}[Scale=MatchLowercase]
-\def\UrlFont{\AgdaFont}
-\setlength{\parskip}{0.25em}
-\setlength{\parindent}{1.25em}
-\setlength{\emergencystretch}{2em}
-\numberwithin{equation}{section}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{example}[definition]{Example}
-\newtheorem{lemma}[definition]{Lemma}
-\newtheorem{proposition}[definition]{Proposition}
-\newtheorem{theorem}[definition]{Theorem}
-\newtheorem{corollary}[definition]{Corollary}
-\theoremstyle{remark}
-\newtheorem{remark}[definition]{Remark}
-\newtheorem{convention}[definition]{Convention}
-\newtheorem{warning}[definition]{Warning}
+\usepackage{../cqts-formalization-series}
 \newcommand{\BG}{\mathbf{B}G}
 \newcommand{\GTors}{G\mathrm{Tors}_{L}}
 \newcommand{\GTorsLevel}{G\mathrm{Tors}_{L,\ell}}
 \newcommand{\Loop}{\mathop{\Omega}}
 \newcommand{\Trunc}[1]{\lVert #1 \rVert}
 \newcommand{\Type}{\mathsf{Type}}
-\newcommand{\agda}[1]{{\AgdaFont #1}}
-\newcounter{formalization}[section]
-\renewcommand{\theformalization}{\thesection.\arabic{formalization}}
-\newcommand{\formal}[3]{\par\smallskip\noindent\begingroup\footnotesize\sffamily\setlength{\parindent}{0pt}\leftskip=1em\rightskip=0pt plus 1fil\refstepcounter{formalization}\textbf{Formalization~\theformalization.} \textbf{File:} #1. \textbf{Declaration:} \agda{#2}. #3\par\endgroup\smallskip}
-\newcommand{\upstream}[2]{\par\smallskip\noindent\begingroup\footnotesize\sffamily\setlength{\parindent}{0pt}\leftskip=1em\rightskip=0pt plus 1fil\refstepcounter{formalization}\textbf{Upstream interface~\theformalization.} \textbf{File:} #1. \textbf{Declaration:} \agda{#2}.\par\endgroup\smallskip}
-% Retain amsart's article layout while matching the title block used by the
-% GroupPresentations article in this repository.
-\makeatletter
-\def\@settitle{%
-  \begin{center}
-    \LARGE\bfseries \@title
-  \end{center}}
-\def\@setauthors{%
-  \begin{center}
-    \large
-    \def\\{\protect\linebreak}%
-    \authors
-  \end{center}}
-\makeatother
 \title[Torsors, Univalence, and Delooping]{Torsors, Univalence, and Delooping\\[0.35em]\large\textnormal{A Mathematical Companion to a Cubical Agda Formalization}}
 \author{Hongwei (Alex) Wang\\[3pt]
 \small New York University Abu Dhabi\\
